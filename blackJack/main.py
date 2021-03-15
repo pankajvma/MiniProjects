@@ -24,11 +24,17 @@ def check_Score(card, score):
 
   return score
 
-user_Deck = []
-computer_Deck = []
 
+def play_again():
+  choice = input("Do you want to play again? Enter 'yes' or 'no': ").lower()
+  if choice == 'yes':
+    start_BlackJack()
+  else:
+    print("Exting...")
 
 def start_BlackJack():
+  user_Deck = []
+  computer_Deck = []
   user_Score = 0
   computer_Score = 0  
   computers_Card = random.choice(cards)
@@ -66,9 +72,11 @@ def start_BlackJack():
         print(f"Your score is: {user_Score}")
         if user_Score == 21:
           print("You Won Already!")
+          play_again()
           return
         elif user_Score > 21:
           print("You Lose!")
+          play_again()
           return
       else:
         break
@@ -83,14 +91,19 @@ def start_BlackJack():
 
     if user_Score == 21:
       print("Computer've Won Already!")
+      play_again()
       return
     elif user_Score > 21:
       print("You Won Already!")
+      play_again()
       return
 
   if computer_Score > user_Score:
     print(f"Computer have won with score {computer_Score}")
+    play_again()
   else:
     print(f"You have won with score {user_Score}")
+    play_again()
+  return
 
 start_BlackJack()

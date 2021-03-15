@@ -37,25 +37,20 @@ def start_BlackJack():
   computer_Deck = []
   user_Score = 0
   computer_Score = 0  
-  computers_Card = random.choice(cards)
-  computer_Deck.append(computers_Card)
-  computer_Score = check_Score(computers_Card, computer_Score)
-  computers_Card = random.choice(cards)
-  computer_Deck.append(computers_Card)
-  computer_Score = check_Score(computers_Card, computer_Score)
+
+  for _ in range(2):
+    computers_Card = random.choice(cards)
+    computer_Deck.append(computers_Card)
+    computer_Score = check_Score(computers_Card, computer_Score)
+    users_Card = random.choice(cards)
+    user_Deck.append(users_Card)
+    user_Score = check_Score(users_Card, user_Score)
 
   if computer_Score == 21:
     print("Computer Won!")
     return
   else:
     print(f"Computer got: [{computer_Deck[0]}, ?]")
-
-  users_Card = random.choice(cards)
-  user_Deck.append(users_Card)
-  user_Score = check_Score(users_Card, user_Score)
-  users_Card = random.choice(cards)
-  user_Deck.append(users_Card)
-  user_Score = check_Score(users_Card, user_Score)
 
   if user_Score == 21:
     print("You Won Already!")
@@ -101,9 +96,10 @@ def start_BlackJack():
   if computer_Score > user_Score:
     print(f"Computer have won with score {computer_Score}")
     play_again()
+    return
   else:
     print(f"You have won with score {user_Score}")
     play_again()
-  return
+    return
 
 start_BlackJack()

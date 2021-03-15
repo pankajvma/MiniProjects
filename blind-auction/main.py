@@ -1,4 +1,4 @@
-from replit import clear
+from os import system
 import  art
 
 print(art.logo)
@@ -9,7 +9,7 @@ bidders_and_bids = {}
 more_bidders = True
 
 def find_highest_bidder():
-  clear()
+  system('cls')
   max_bidder = ""
   max_bid = 0
   for bidder in bidders_and_bids:
@@ -27,7 +27,7 @@ while more_bidders:
   more_bidders = input("Are there any other bidders? Type 'yes' or 'no': ").lower()
   if more_bidders == "yes":
     more_bidders = True
-    clear()
+    system('cls')
   else:
     more_bidders = False
     find_highest_bidder()

@@ -1,4 +1,4 @@
-from replit import clear
+from os import system
 import random
 import hangman_words
 # from hangman_words import word_list
@@ -24,7 +24,7 @@ for _ in range(word_length):
 
 while not end_of_game:
     guess = input("Guess a letter: ").lower()
-    clear()
+    system('cls')
 
     if guess in display:
       print("Already made this guess")
@@ -40,7 +40,7 @@ while not end_of_game:
         lives -= 1
         if lives == 0:
             end_of_game = True
-            print("You lose.")
+            print("You lose.\nThe word was "+chosen_word)
 
     print(f"{' '.join(display)}")
 

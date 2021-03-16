@@ -1,5 +1,6 @@
 import random
 import art
+from os import system
 
 print(art.logo)
 
@@ -28,21 +29,27 @@ def check_score(card, score):
 def play_again():
   choice = input("Do you want to play again? Enter 'yes' or 'no': ").lower()
   if choice == 'yes':
+    system('cls')
     start_blackjack()
   else:
     print("Exting...")
 
 def compare_score(com_score, u_score):
-  if com_score == 21:
-    print("Computer've Won Already!")
-  elif u_score == 21:
-    print("You Won Already!")
-  elif com_score > u_score:
-    print(f"Computer have won with score {com_score}")
-  elif com_score < u_score:
-    print(f"You have won with score {u_score}")
+  if com_score > 21:
+    print("You've Won!")
+  elif u_score > 21:
+    print("You Lose!")
   else:
-    print("It's a draw")
+    if com_score == 21:
+      print("Computer've Won Already!")
+    elif u_score == 21:
+      print("You Won Already!")
+    elif com_score > u_score:
+      print(f"Computer have won with score {com_score}")
+    elif com_score < u_score:
+      print(f"You have won with score {u_score}")
+    else:
+      print("It's a draw")
   play_again()
 
 def start_blackjack():

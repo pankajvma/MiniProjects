@@ -23,7 +23,7 @@ for number in range(nr_numbers):
   rand = random.randint(0, len(numbers)-1)
   password += numbers[rand]
 
-print(password)
+print("Password: "+password)
 
 password = []
 
@@ -45,4 +45,4 @@ for i in range(len(password)):
   strong_pass += password[rand]
   password.pop(rand)
 
-print(strong_pass)
+print("Strong Password: "+strong_pass)

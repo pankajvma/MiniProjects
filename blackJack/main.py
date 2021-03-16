@@ -32,7 +32,7 @@ def play_again():
     system('cls')
     start_blackjack()
   else:
-    print("Exting...")
+    print("Exiting...")
 
 def compare_score(com_score, u_score):
   if com_score > 21:
@@ -67,6 +67,7 @@ def start_blackjack():
     user_score = check_score(users_card, user_score)
 
   if computer_score == 21:
+    print(f"Computer've got: {user_deck}")
     print("Computer Won!")
     play_again()
     return
@@ -74,6 +75,7 @@ def start_blackjack():
     print(f"Computer got: [{computer_deck[0]}, ?]")
 
   if user_score == 21:
+    print(f"You've got: {user_deck}")
     print("You Won Already!")
     play_again()
     return

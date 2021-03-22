@@ -1,12 +1,12 @@
 class MoneyMachine:
 
-    CURRENCY = "$"
+    CURRENCY = "Rs."
 
     COIN_VALUES = {
-        "quarters": 0.25,
-        "dimes": 0.10,
-        "nickles": 0.05,
-        "pennies": 0.01
+        "1 rupee coins": 1,
+        "2 rupee coins": 2,
+        "5 rupee coins": 5,
+        "10 rupee coins": 10
     }
 
     def __init__(self):
@@ -28,7 +28,7 @@ class MoneyMachine:
         """Returns True when payment is accepted, or False if insufficient."""
         self.process_coins()
         if self.money_received >= cost:
-            change = round(self.money_received - cost, 2)
+            change = self.money_received - cost
             print(f"Here is {self.CURRENCY}{change} in change.")
             self.profit += cost
             self.money_received = 0

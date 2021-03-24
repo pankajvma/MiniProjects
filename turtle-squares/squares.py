@@ -1,7 +1,9 @@
 from turtle import Turtle
 import random
 
-turtle_colors = ["dark slate blue", "indigo", "dark violet", "dark magenta", "medium violet red", "maroon", "saddle brown", "dark green", "blue", "orange"]
+turtle_colors = turtle_colors = ["dark slate blue", "indigo", "dark violet", "dark magenta", "medium violet red", "maroon", 
+                    "saddle brown", "dark green", "blue", "orange", "gold", "yellow", "olive drab", "red",
+                    "slate gray", "gainsboro", "thistle", "dark goldenrod", "cyan", "navajo white", "dark olive green"]
 
 class RandomTurle:
     def __init__(self):

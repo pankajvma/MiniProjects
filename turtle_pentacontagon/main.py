@@ -1,10 +1,11 @@
 from turtle import Turtle, Screen
+import turtle as t
 import random
 
 tim = Turtle()
 screen = Screen()
 
-screen.colormode(255)
+t.colormode(255)
 screen.setup(1000, 800)
 
 tim.speed("fastest")

@@ -3,3 +3,4 @@ Because of randomization the output produced in the second execution is unique a
 
 Implemented using lists, randomization, and OOP.
 
+![turtle_random_spirograph](https://user-images.githubusercontent.com/47264501/112344883-8e25a600-8cea-11eb-9fb3-0f0c48cce973.gif)

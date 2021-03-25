@@ -15,12 +15,12 @@ for color in colors:
     extracted_colors.append((r, g, b))
 
 tuntun = Turtle()
+tuntun.hideturtle()
 screen = Screen()
 t.colormode(255)
-tuntun.pu()
+tuntun.penup()
 tuntun.speed("fastest")
 tuntun.setposition(-300, -200)
-
 
 
 for count in range(1, 101):

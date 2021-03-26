@@ -4,4 +4,4 @@ Grid lines have been added for better visualization.
 
 Implemented using lists, randomization, and OOP.
 
-![turtle_randomwallk](https://user-images.githubusercontent.com/47264501/112299700-0e81e200-8cbe-11eb-93f2-4db67dffbc3c.gif)
+![turtle_updated_random_walk](https://user-images.githubusercontent.com/47264501/112601767-d94dcf00-8e38-11eb-8afb-37038b2bad65.gif)

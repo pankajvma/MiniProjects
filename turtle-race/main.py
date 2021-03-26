@@ -1,61 +1,32 @@
 from turtle import Turtle, Screen
 import random
 
-
-def color_turtles():
-    tuntun.color("red")
-    tintun.color("orange")
-    tintin.color("yellow")
-    tuntin.color("green")
-    tunton.color("blue")
-    tontin.color("indigo")
-    tinton.color("violet")
-
-def set_turtles():
-    y = -100
-    for tortoise in turtles:
-        tortoise.setposition(-250, y)
-        y += 40
-
+colors = ["red", "orange", "yellow", "green", "blue", "indigo", "violet"]
 
 def draw_finish_line():
+    line = Turtle()
+    line.hideturtle()
+    line.pencolor("black")
+    line.penup()
+    line.pensize(2)
     line.setposition(230, -140)
     line.left(90)
     line.pendown()
     line.forward(300)
 
 
-tuntun = Turtle()
-tintun = Turtle()
-tintin = Turtle()
-tuntin = Turtle()
-tunton = Turtle()
-tontin = Turtle()
-tinton = Turtle()
+turtles = []
 
-line = Turtle()
-line.hideturtle()
-line.pencolor("black")
-line.penup()
-line.pensize(2)
-
-turtles = [tuntun, tintun, tintin, tuntin, tunton, tontin, tinton]
-
-for tortoise in turtles:
-    tortoise.shape("turtle")
-    tortoise.penup()
-
-screen = Screen()
-screen.setup(width = 550, height = 400)
-choice=screen.textinput("Choose your turtle", "Choose from violet, indigo, blue, green, yellow, orange, red  (VIBGYOR):").lower()
-
-color_turtles()
-
-
-set_turtles()
-
-
-draw_finish_line()
+def set_turtles():
+    y = -100
+    for i in range(7):
+        tuntun = Turtle()
+        tuntun.shape("turtle")
+        tuntun.penup()
+        tuntun.color(colors[i])
+        tuntun.setposition(-250, y)
+        y += 40
+        turtles.append(tuntun)
 
 
 def start_race():
@@ -66,15 +37,19 @@ def start_race():
         if runner.xcor() == 230:
             winner += runner.color()[0]
             break
-    return winner
+    if winner == choice:
+        print(f"Congratulations! Your {choice.title()} turtle is the winner")
+    else:
+        print(f"Your {choice.title()} turtle couldn't make it to the finish line first.\n{winner.title()} turtle is the winner")
 
-winner = start_race()
+screen = Screen()
+screen.setup(width = 550, height = 400)
+choice=screen.textinput("Choose your turtle", "Choose from violet, indigo, blue, green, yellow, orange, red  (VIBGYOR):").lower()
 
-if winner == choice:
-    print(f"Congratulations! Your {choice.title()} turtle is the winner")
-else:
-    print(f"Your {choice.title()} turtle couldn't make it to the finish line first.\n{winner.title()} turtle is the winner")
+set_turtles()
 
+draw_finish_line()
+
+start_race()
 
 screen.exitonclick()
-

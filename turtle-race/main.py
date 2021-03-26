@@ -2,6 +2,7 @@ from turtle import Turtle, Screen
 import random
 
 colors = ["red", "orange", "yellow", "green", "blue", "indigo", "violet"]
+turtles = []
 
 def draw_finish_line():
     line = Turtle()
@@ -14,8 +15,6 @@ def draw_finish_line():
     line.pendown()
     line.forward(300)
 
-
-turtles = []
 
 def set_turtles():
     y = -100

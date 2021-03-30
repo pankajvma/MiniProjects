@@ -14,8 +14,6 @@ screen.setup(600, 600)
 screen.title("Snake and Food")
 screen.tracer(0)
 
-
-screen.update()
 screen.listen()
 
 deadline = Deadline()

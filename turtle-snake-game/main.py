@@ -36,6 +36,7 @@ while True:
 
     if snake.head.distance(food) <= 15:
         food.refresh()
+        snake.extend()
         score.update_score()
 
     

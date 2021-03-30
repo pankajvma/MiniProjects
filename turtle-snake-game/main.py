@@ -27,10 +27,11 @@ screen.onkey(snake.down, "Down")
 screen.onkey(snake.left, "Left")
 screen.onkey(snake.right, "Right")
  
+is_on = True
 
-while True:
+while is_on:
     screen.update()
-    time.sleep(0.1)
+    time.sleep(0.08)
 
     snake.move()
 
@@ -41,7 +42,16 @@ while True:
 
     
     if snake.head.xcor() > 280 or snake.head.xcor() < -280 or snake.head.ycor() > 280 or snake.head.ycor() < -280:
-        break
+        is_on =False
+
+
+    for segment in snake.segments:
+        if segment == snake.head:
+            pass
+        elif snake.head.distance(segment) <= 15:
+            is_on =False
+            break
+
 
 score.game_over()
 screen.exitonclick()

@@ -10,6 +10,10 @@ class Deadline(Turtle):
         self.penup()
         self.color("red")
         self.speed("fastest")
-        self.setposition(-300, 280)
+        self.setposition(-298, 280)
         self.pendown()
-        self.forward(600)
+        for _ in range(2):
+            self.forward(589)
+            self.right(90)
+            self.forward(570)
+            self.right(90)

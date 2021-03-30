@@ -4,7 +4,7 @@ from snake import Snake
 from food import Food
 import random
 from score_board import Score
-from top_deadline import Deadline
+from deadline import Deadline
 
 screen = Screen()
 score = Score()
@@ -41,14 +41,12 @@ while is_on:
         score.update_score()
 
     
-    if snake.head.xcor() > 280 or snake.head.xcor() < -280 or snake.head.ycor() > 280 or snake.head.ycor() < -280:
+    if snake.head.xcor() > 290 or snake.head.xcor() < -300 or snake.head.ycor() > 280 or snake.head.ycor() < -300:
         is_on =False
 
 
-    for segment in snake.segments:
-        if segment == snake.head:
-            pass
-        elif snake.head.distance(segment) <= 15:
+    for segment in snake.segments[1:]:
+        if snake.head.distance(segment) <= 10:
             is_on =False
             break
 

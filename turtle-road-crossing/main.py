@@ -2,13 +2,14 @@ import time
 from turtle import Screen
 from player import Player
 from car_manager import CarManager
-from scoreboard import Scoreboard
+from scoreboard import Levelboard
 
 screen = Screen()
 screen.setup(width=600, height=600)
 screen.tracer(0)
 
 player = Player()
+level_board = Levelboard()
 
 screen.listen()
 screen.onkey(player.move_up, "Up")
@@ -28,8 +29,10 @@ while game_is_on:
 
     if player.is_at_finish_line():
         time.sleep(1)
+        level_board.level_up()
         car.reset()
         player.reset()
 
 
+level_board.game_over()
 screen.exitonclick()

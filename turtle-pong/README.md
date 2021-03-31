@@ -9,3 +9,4 @@ Skills improved- Knowledge of screen coordinates
 
 The output shown below has been cut short to show the basic working of the project.
 
+![turtle_pong](https://user-images.githubusercontent.com/47264501/113079127-1bd52a00-91f2-11eb-8c32-e02f571002d5.gif)

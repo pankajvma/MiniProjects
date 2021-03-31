@@ -5,6 +5,7 @@ from car_manager import CarManager
 from scoreboard import Levelboard
 
 screen = Screen()
+screen.title("Roadd Crossing")
 screen.setup(width=600, height=600)
 screen.tracer(0)
 

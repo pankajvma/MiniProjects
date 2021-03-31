@@ -13,8 +13,8 @@ class CarManager:
         
 
     def create_car(self):
-        random_chance = random.randint(1, 6)
-        if random_chance == 6:
+        random_chance = random.randint(1, 4)
+        if random_chance == 3:
             car = Turtle()
             car.shape("square")
             car.shapesize(1, 2)

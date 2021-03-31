@@ -26,5 +26,10 @@ while game_is_on:
         if cr.distance(player) < 20:
             game_is_on = False
 
+    if player.is_at_finish_line():
+        time.sleep(1)
+        car.reset()
+        player.reset()
+
 
 screen.exitonclick()

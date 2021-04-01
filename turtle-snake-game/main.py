@@ -36,7 +36,7 @@ def start_game():
             score.increment_score()
 
         
-        if snake.head.xcor() > 290 or snake.head.xcor() < -300 or snake.head.ycor() > 280 or snake.head.ycor() < -300:
+        if snake.head.xcor() > 290 or snake.head.xcor() < -295 or snake.head.ycor() > 280 or snake.head.ycor() < -280:
             is_on =False
 
 

@@ -9,7 +9,7 @@ class Score(Turtle):
     def __init__(self):
         super().__init__()
         self.score = 0
-        self.path = ".\\data.txt"
+        self.path = "data.txt"
         with open(self.path) as reader:
             self.high_score = int(reader.read())
         self.color("white")

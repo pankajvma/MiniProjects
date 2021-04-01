@@ -15,4 +15,6 @@ In the output below we can see that What happens when:
 	- We score more than the current highscore
 	- We want to play the game again
 
-![turtle_snake ](https://user-images.githubusercontent.com/47264501/113079004-e2042380-91f1-11eb-97bc-2762d877af73.gif)
+Note: The below output has been cut short to show the essential working of the Project.
+
+![turtle_snake_updated_with_file_handling](https://user-images.githubusercontent.com/47264501/113277634-92f7e480-92fe-11eb-8784-12ffd55dc337.gif)

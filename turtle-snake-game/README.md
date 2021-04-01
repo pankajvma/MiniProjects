@@ -3,7 +3,7 @@ Here I have tried to create the classic Snake game.
 Implemented using OOP - 
 	Everything in the program is an objects for example - The snake is an object made up of several segment objects. Each time the Snake touches the food we extend one more segment in the Snake. The food is an Object. The scoreboard is an object.
 
-File handling - To keep track of tthe highscore
+File handling - To keep track of the highscore
 
 List - Each segment, and the initial position of snake segments is stored in a list.
 

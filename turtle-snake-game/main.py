@@ -20,34 +20,49 @@ deadline = Deadline()
 snake = Snake()
 food = Food()
 
+
+def start_game():
+    is_on = True
+
+    while is_on:
+        screen.update()
+        time.sleep(0.08)
+
+        snake.move()
+
+        if snake.head.distance(food) <= 15:
+            food.refresh()
+            snake.extend()
+            score.increment_score()
+
+        
+        if snake.head.xcor() > 290 or snake.head.xcor() < -300 or snake.head.ycor() > 280 or snake.head.ycor() < -300:
+            is_on =False
+
+
+        for segment in snake.segments[1:]:
+            if snake.head.distance(segment) <= 10:
+                is_on =False
+                break
+
+    score.reset()
+
+
+
+def restart_game():
+    score.reset_pos()
+    snake.reset()
+    start_game()
+
 screen.onkey(snake.up, "Up")
 screen.onkey(snake.down, "Down")
 screen.onkey(snake.left, "Left")
 screen.onkey(snake.right, "Right")
- 
-is_on = True
-
-while is_on:
-    screen.update()
-    time.sleep(0.08)
-
-    snake.move()
-
-    if snake.head.distance(food) <= 15:
-        food.refresh()
-        snake.extend()
-        score.update_score()
-
-    
-    if snake.head.xcor() > 290 or snake.head.xcor() < -300 or snake.head.ycor() > 280 or snake.head.ycor() < -300:
-        is_on =False
+screen.onkey(restart_game, "p")
+screen.onkey(exit, "q") 
 
 
-    for segment in snake.segments[1:]:
-        if snake.head.distance(segment) <= 10:
-            is_on =False
-            break
+start_game()
 
-
-score.game_over()
 screen.exitonclick()
+

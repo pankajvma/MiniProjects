@@ -26,6 +26,7 @@ while game_is_on:
 
     for cr in car.cars:
         if cr.distance(player) < 20:
+            screen.update()
             game_is_on = False
 
     if player.is_at_finish_line():

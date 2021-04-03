@@ -1,13 +1,13 @@
 Here I have tried to create the classic Snake game.
 
-Implemented using OOP - 
+- Implemented using OOP - 
 	Everything in the program is an objects for example - The snake is an object made up of several segment objects. Each time the Snake touches the food we extend one more segment in the Snake. The food is an Object. The scoreboard is an object.
 
-File handling - To keep track of the highscore
+- File handling - To keep track of the highscore
 
-List - Each segment, and the initial position of snake segments is stored in a list.
+- List - Each segment, and the initial position of snake segments is stored in a list.
 
-Randomization - Used to transfer food to random positions on screen.
+- Randomization - Used to transfer food to random positions on screen.
 
 In the output below we can see that What happens when:
 	- The snake collides with any of the four walls

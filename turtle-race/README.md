@@ -2,7 +2,7 @@ Mini-project trying to simulate a turtle race using multiple turtle objects. The
 
 The race of the result is then printed on the console at the end of the race.
 
-Implemented using OOP, randomization, and Turtle framework.
+- Implemented using OOP, randomization, and Turtle framework.
 
 Please check the output gif below.
 

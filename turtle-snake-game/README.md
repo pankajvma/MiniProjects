@@ -10,10 +10,10 @@ Here I have tried to create the classic Snake game.
 - Randomization - Used to transfer food to random positions on screen.
 
 In the output below we can see that What happens when:
-	- The snake collides with any of the four walls
-	- The snake collides with its tail.
-	- We score more than the current highscore
-	- We want to play the game again
+- The snake collides with any of the four walls
+- The snake collides with its tail.
+- We score more than the current highscore
+- We want to play the game again
 
 Note: The below output has been cut short to show the essential working of the Project.
 

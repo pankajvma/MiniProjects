@@ -36,20 +36,22 @@ def exit_from_game(total_correct_answers):
     writer.write(f"You guessed {total_correct_answers} states correctly.", align = "center", font = FINAL_FONT_STYLE)
     time.sleep(5)
     exit()
-
     
 
 def start_game():
     is_on = True
     count = 0
-    while is_on:
-        answer_state = screen.textinput(title = "Guess the State", prompt = "Enter the missing states. \nEnter 'Q' to quit.").split(" ")
+    while is_on and count <= 36:
+        answer_state = screen.textinput(title = f"{count}/36 states", prompt = "Enter the missing states. \nEnter 'Q' to quit.").split(" ")
         answer = ''
         for word in answer_state:
-            if word.title() != "And":
-                answer += word.title()
-            else:
+            if word.title() == "And":
                 answer += ' and '
+            elif word.title() == "Nicobar" or word.title() == "Nagar":
+                answer += word.title()+' '
+            else:
+                answer += word.title()
+            print(answer)
         if answer != 'Q':
             if answer in map.map_dict:
                 count += 1

@@ -12,7 +12,7 @@ writer.color('green')
 screen = Screen()
 screen.screensize(600,600)
 FONT_STYLE = ('Arial',8,'normal')
-FINAL_FONT_STYLE = ('Arial',18,'bold')
+FINAL_FONT_STYLE = ('Arial',13,'bold')
 
 screen.title("Guess all the Indian states and Union Territories")
 
@@ -34,15 +34,19 @@ def exit_from_game(total_correct_answers):
     writer.color("white")
     writer.goto(0, 0)
     writer.write(f"You guessed {total_correct_answers} states correctly.", align = "center", font = FINAL_FONT_STYLE)
+    writer.goto(0, -20)
+    writer.write("Please check the states_to_remember.csv file to find out which states you missed.", align = "center", font = FINAL_FONT_STYLE)
     time.sleep(5)
     exit()
     
 
 def start_game():
     is_on = True
-    count = 0
-    while is_on and count <= 36:
-        answer_state = screen.textinput(title = f"{count}/36 states", prompt = "Enter the missing states. \nEnter 'Q' to quit.").split(" ")
+    right_guesses = []
+    missed_states = []
+    all_states = map.states.to_list()
+    while is_on and len(right_guesses) <= 36:
+        answer_state = screen.textinput(title = f"{len(right_guesses)}/36 states", prompt = "Enter the missing states. \nEnter 'Q' to quit.").split(" ")
         answer = ''
         for word in answer_state:
             if word.title() == "And":
@@ -51,17 +55,20 @@ def start_game():
                 answer += word.title()+' '
             else:
                 answer += word.title()
-            print(answer)
         if answer != 'Q':
             if answer in map.map_dict:
-                count += 1
+                right_guesses.append(answer)
                 writer.goto(map.map_dict[answer])
                 writer.write(answer.title(), align = "center", font = FONT_STYLE)
                 time.sleep(1)
         else:
             is_on = False
+            for state in right_guesses:
+                if state not in all_states:
+                    missed_states.append(state)
+            map.save(missed_states)   
     
-    exit_from_game(count)
+    exit_from_game(len(right_guesses))
 
 start_game()
 

@@ -15,3 +15,7 @@ for state in states:
     x += 1
     y += 1
 
+
+def save(missing_states):
+    list_to_save = pd.DataFrame(missing_states)
+    list_to_save.to_csv('states_to_remember.csv')

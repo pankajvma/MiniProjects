@@ -63,8 +63,8 @@ def start_game():
                 time.sleep(1)
         else:
             is_on = False
-            for state in right_guesses:
-                if state not in all_states:
+            for state in all_states:
+                if state not in right_guesses:
                     missed_states.append(state)
             map.save(missed_states)   
     

@@ -1,7 +1,9 @@
-invited_names_path = './input/names/invited_names.txt'
-letter_path = './input/letters/meeting_invitation.txt'
+invited_names_path = './input/names/invited_names.txt' # Path to  invitation list file
+
+letter_path = './input/letters/meeting_invitation.txt' # Path to  invitation letter file
+
 invited_names = []
-output_letters = './output/'
+output_letters = './output/'    # Path to  store the generated letters
 
 with open(invited_names_path) as reader:
         invited_names = reader.readlines()

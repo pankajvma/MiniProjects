@@ -628,21 +628,6 @@ df.head(10)
 
 
 ```python
-df.keys()
-```
-
-
-
-
-    Index(['age', 'job', 'marital', 'education', 'default', 'balance', 'housing',
-           'loan', 'contact', 'day', 'month', 'duration', 'campaign', 'pdays',
-           'previous', 'poutcome', 'y'],
-          dtype='object')
-
-
-
-
-```python
 df.shape
 ```
 
@@ -674,7 +659,8 @@ df.groupby('y').size()
 
 ```python
 # Adding a new column by name 'subscribed' to store the value '1' if subscribed, else '0' 
-subscribed = len(df[df.y == 'yes'])
+df['subscribed'] = (df.y == 'yes').astype('int')
+df.drop('y', axis=1, inplace=True)
 ```
 
 
@@ -687,7 +673,7 @@ df.keys()
 
     Index(['age', 'job', 'marital', 'education', 'default', 'balance', 'housing',
            'loan', 'contact', 'day', 'month', 'duration', 'campaign', 'pdays',
-           'previous', 'poutcome', 'y'],
+           'previous', 'poutcome', 'subscribed'],
           dtype='object')
 
 
@@ -697,18 +683,17 @@ df.keys()
 # By calculating the prevalance we are checking that out of total customers how many customer have actually suscribed 
 def calculate_prevalance(subscribed):
     total_customers = len(df)
-    positive_prevalance = subscribed/total_customers
+    positive_prevalance = sum(subscribed)/total_customers
     positive_prevalance = round(positive_prevalance, 3)
     print(f"The positive prevalnce is: {positive_prevalance}")
     
-calculate_prevalance(subscribed)
+calculate_prevalance(df['subscribed'].values)
 ```
 
     The positive prevalnce is: 0.117
     
 
 ### Exploring unique values
-
 - Checking if there are any unnecessary columns
 - Finding categorical varieties
 
@@ -854,7 +839,7 @@ df[list(df.columns)[10:]].head()
       <th>pdays</th>
       <th>previous</th>
       <th>poutcome</th>
-      <th>y</th>
+      <th>subscribed</th>
     </tr>
   </thead>
   <tbody>
@@ -866,7 +851,7 @@ df[list(df.columns)[10:]].head()
       <td>-1</td>
       <td>0</td>
       <td>unknown</td>
-      <td>no</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>1</th>
@@ -876,7 +861,7 @@ df[list(df.columns)[10:]].head()
       <td>-1</td>
       <td>0</td>
       <td>unknown</td>
-      <td>no</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>2</th>
@@ -886,7 +871,7 @@ df[list(df.columns)[10:]].head()
       <td>-1</td>
       <td>0</td>
       <td>unknown</td>
-      <td>no</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>3</th>
@@ -896,7 +881,7 @@ df[list(df.columns)[10:]].head()
       <td>-1</td>
       <td>0</td>
       <td>unknown</td>
-      <td>no</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>4</th>
@@ -906,7 +891,7 @@ df[list(df.columns)[10:]].head()
       <td>-1</td>
       <td>0</td>
       <td>unknown</td>
-      <td>no</td>
+      <td>0</td>
     </tr>
   </tbody>
 </table>
@@ -952,7 +937,7 @@ for feature in df.columns:
     pdays : 559 unique values
     previous : 41 unique values
     poutcome : 4 unique values
-    y : 2 unique values
+    subscribed : 2 unique values
     
 
 
@@ -989,8 +974,8 @@ for feature in df.columns:
     ['may' 'jun' 'jul' 'aug' 'oct' 'nov' 'dec' 'jan' 'feb' 'mar' 'apr' 'sep']
     poutcome : 4
     ['unknown' 'failure' 'other' 'success']
-    y : 2
-    ['no' 'yes']
+    subscribed : 2
+    [0 1]
     
 
 ### Numerical Features
@@ -1131,8 +1116,8 @@ for col in numerical_data :
     plt.ylabel('Density')
     
     plt.subplot(1,2,2)
-    sns.boxplot(x='y', y = col, data =df, showmeans = True)
-    plt.xlabel('Target')
+    sns.boxplot(x='subscribed', y = col, data =df, showmeans = True)
+    plt.xlabel('Subscribed')
     plt.ylabel(col)
     
     plt.show()
@@ -1140,43 +1125,43 @@ for col in numerical_data :
 
 
     
-![png](output_35_0.png)
+![png](output_33_0.png)
     
 
 
 
     
-![png](output_35_1.png)
+![png](output_33_1.png)
     
 
 
 
     
-![png](output_35_2.png)
+![png](output_33_2.png)
     
 
 
 
     
-![png](output_35_3.png)
+![png](output_33_3.png)
     
 
 
 
     
-![png](output_35_4.png)
+![png](output_33_4.png)
     
 
 
 
     
-![png](output_35_5.png)
+![png](output_33_5.png)
     
 
 
 
     
-![png](output_35_6.png)
+![png](output_33_6.png)
     
 
 
@@ -1201,25 +1186,25 @@ for col in numerical_data :
 
 
     
-![png](output_37_0.png)
+![png](output_35_0.png)
     
 
 
 
     
-![png](output_37_1.png)
+![png](output_35_1.png)
     
 
 
 
     
-![png](output_37_2.png)
+![png](output_35_2.png)
     
 
 
 
     
-![png](output_37_3.png)
+![png](output_35_3.png)
     
 
 
@@ -1248,13 +1233,13 @@ plt.show()
 
 
     
-![png](output_39_0.png)
+![png](output_37_0.png)
     
 
 
 
     
-![png](output_39_1.png)
+![png](output_37_1.png)
     
 
 
@@ -1284,8 +1269,7 @@ object_data
      'loan',
      'contact',
      'month',
-     'poutcome',
-     'y']
+     'poutcome']
 
 
 
@@ -1324,6 +1308,77 @@ for col in range(1, len(object_data) - 1, 2):
 
 
     
+![png](output_42_0.png)
+    
+
+
+
+    
+![png](output_42_1.png)
+    
+
+
+
+    
+![png](output_42_2.png)
+    
+
+
+
+    
+![png](output_42_3.png)
+    
+
+
+
+    
+![png](output_42_4.png)
+    
+
+
+**Observations**
+- We can see the most of the targeted customers are either in management or are blue-coller (9000+ each)
+- More than 25000 of the customers are married
+- 20000+ customers have received secondary education
+- 40000+ customers do not have any credit
+- Around 25000+ have taken a housing loan
+- 35000+ People do not have any kind of personal loan
+- Around 30000+ people were contacted over cellular phones
+- Most of the customers were contacted in the month of May
+- Most of the people are being contacted for the very first time hence most of the values in the column poutcomee are unknown
+- 5289 Out of 45211 contacted customers subscribed
+
+
+```python
+plt.rcParams.update({'font.size': 11})
+
+plt.figure(figsize=(16,4))
+plt.subplot().patch.set_visible(False)
+sns.countplot(x = df['job'], hue='subscribed', data = df)
+plt.xlabel('Job')
+plt.ylabel('Count')
+
+plt.rcParams.update({'font.size': 16})
+
+plt.show()
+
+for col in range(1, len(object_data) - 1, 2): 
+    plt.figure(figsize=(16,4))
+    col_index = col
+    column_name = object_data[col_index]
+    col_index += 1
+    plt.subplot(1, 2, 1).patch.set_visible(False)
+    sns.countplot(x=df[column_name],hue='subscribed',data=df)
+    
+    column_name = object_data[col_index]
+    plt.subplot(1, 2, 2).patch.set_visible(False)
+    sns.countplot(x=df[column_name],hue='subscribed',data=df)
+    
+    plt.show()
+```
+
+
+    
 ![png](output_44_0.png)
     
 
@@ -1352,192 +1407,117 @@ for col in range(1, len(object_data) - 1, 2):
     
 
 
-**Observations**
-- We can see the most of the targeted customers are either in management or are blue-coller (9000+ each)
-- More than 25000 of the customers are married
-- 20000+ customers have received secondary education
-- 40000+ customers do not have any credit
-- Around 25000+ have taken a housing loan
-- 35000+ People do not have any kind of personal loan
-- Around 30000+ people were contacted over cellular phones
-- Most of the customers were contacted in the month of May
-- Most of the people are being contacted for the very first time hence most of the values in the column poutcomee are unknown
-- 5289 Out of 45211 contacted customers subscribed
-
-
-```python
-plt.rcParams.update({'font.size': 11})
-
-plt.figure(figsize=(16,4))
-plt.subplot().patch.set_visible(False)
-sns.countplot(x = df['job'], hue='y', data = df)
-plt.xlabel('Job')
-plt.ylabel('Count')
-
-plt.rcParams.update({'font.size': 16})
-
-plt.show()
-
-for col in range(1, len(object_data) - 1, 2): 
-    plt.figure(figsize=(16,4))
-    col_index = col
-    column_name = object_data[col_index]
-    col_index += 1
-    plt.subplot(1, 2, 1).patch.set_visible(False)
-    sns.countplot(x=df[column_name],hue='y',data=df)
-    
-    column_name = object_data[col_index]
-    plt.subplot(1, 2, 2).patch.set_visible(False)
-    sns.countplot(x=df[column_name],hue='y',data=df)
-    
-    plt.show()
-```
-
-
-    
-![png](output_46_0.png)
-    
-
-
-
-    
-![png](output_46_1.png)
-    
-
-
-
-    
-![png](output_46_2.png)
-    
-
-
-
-    
-![png](output_46_3.png)
-    
-
-
-
-    
-![png](output_46_4.png)
-    
-
-
 
 ```python
 for col in object_data:
-    print(df.groupby(['y', col]).size())
+    print(df.groupby(['subscribed', col]).size())
 ```
 
-    y    job          
-    no   admin.           4540
-         blue-collar      9024
-         entrepreneur     1364
-         housemaid        1131
-         management       8157
-         retired          1748
-         self-employed    1392
-         services         3785
-         student           669
-         technician       6757
-         unemployed       1101
-         unknown           254
-    yes  admin.            631
-         blue-collar       708
-         entrepreneur      123
-         housemaid         109
-         management       1301
-         retired           516
-         self-employed     187
-         services          369
-         student           269
-         technician        840
-         unemployed        202
-         unknown            34
+    subscribed  job          
+    0           admin.           4540
+                blue-collar      9024
+                entrepreneur     1364
+                housemaid        1131
+                management       8157
+                retired          1748
+                self-employed    1392
+                services         3785
+                student           669
+                technician       6757
+                unemployed       1101
+                unknown           254
+    1           admin.            631
+                blue-collar       708
+                entrepreneur      123
+                housemaid         109
+                management       1301
+                retired           516
+                self-employed     187
+                services          369
+                student           269
+                technician        840
+                unemployed        202
+                unknown            34
     dtype: int64
-    y    marital 
-    no   divorced     4585
-         married     24459
-         single      10878
-    yes  divorced      622
-         married      2755
-         single       1912
+    subscribed  marital 
+    0           divorced     4585
+                married     24459
+                single      10878
+    1           divorced      622
+                married      2755
+                single       1912
     dtype: int64
-    y    education
-    no   primary       6260
-         secondary    20752
-         tertiary     11305
-         unknown       1605
-    yes  primary        591
-         secondary     2450
-         tertiary      1996
-         unknown        252
+    subscribed  education
+    0           primary       6260
+                secondary    20752
+                tertiary     11305
+                unknown       1605
+    1           primary        591
+                secondary     2450
+                tertiary      1996
+                unknown        252
     dtype: int64
-    y    default
-    no   no         39159
-         yes          763
-    yes  no          5237
-         yes           52
+    subscribed  default
+    0           no         39159
+                yes          763
+    1           no          5237
+                yes           52
     dtype: int64
-    y    housing
-    no   no         16727
-         yes        23195
-    yes  no          3354
-         yes         1935
+    subscribed  housing
+    0           no         16727
+                yes        23195
+    1           no          3354
+                yes         1935
     dtype: int64
-    y    loan
-    no   no      33162
-         yes      6760
-    yes  no       4805
-         yes       484
+    subscribed  loan
+    0           no      33162
+                yes      6760
+    1           no       4805
+                yes       484
     dtype: int64
-    y    contact  
-    no   cellular     24916
-         telephone     2516
-         unknown      12490
-    yes  cellular      4369
-         telephone      390
-         unknown        530
+    subscribed  contact  
+    0           cellular     24916
+                telephone     2516
+                unknown      12490
+    1           cellular      4369
+                telephone      390
+                unknown        530
     dtype: int64
-    y    month
-    no   apr       2355
-         aug       5559
-         dec        114
-         feb       2208
-         jan       1261
-         jul       6268
-         jun       4795
-         mar        229
-         may      12841
-         nov       3567
-         oct        415
-         sep        310
-    yes  apr        577
-         aug        688
-         dec        100
-         feb        441
-         jan        142
-         jul        627
-         jun        546
-         mar        248
-         may        925
-         nov        403
-         oct        323
-         sep        269
+    subscribed  month
+    0           apr       2355
+                aug       5559
+                dec        114
+                feb       2208
+                jan       1261
+                jul       6268
+                jun       4795
+                mar        229
+                may      12841
+                nov       3567
+                oct        415
+                sep        310
+    1           apr        577
+                aug        688
+                dec        100
+                feb        441
+                jan        142
+                jul        627
+                jun        546
+                mar        248
+                may        925
+                nov        403
+                oct        323
+                sep        269
     dtype: int64
-    y    poutcome
-    no   failure      4283
-         other        1533
-         success       533
-         unknown     33573
-    yes  failure       618
-         other         307
-         success       978
-         unknown      3386
-    dtype: int64
-    y    y  
-    no   no     39922
-    yes  yes     5289
+    subscribed  poutcome
+    0           failure      4283
+                other        1533
+                success       533
+                unknown     33573
+    1           failure       618
+                other         307
+                success       978
+                unknown      3386
     dtype: int64
     
 
@@ -1547,6 +1527,26 @@ for col in object_data:
 - The people who do not have a credit have shown interest in the term deposit.
 - The people who do not have a housing loan have shown relatively higher interest in the term deposit.
 - Customers who were contacted during the month of March, September, December, and October repectively have mostly subscribed to the term deposit.
+
+
+```python
+df['education'].replace('unknown',0, inplace=True)
+df['education'].replace('primary',1, inplace=True)
+df['education'].replace('secondary',2, inplace=True)
+df['education'].replace('tertiary',3, inplace=True)
+```
+
+
+```python
+df['education'].dtypes
+```
+
+
+
+
+    dtype('int64')
+
+
 
 
 ```python
@@ -1575,83 +1575,123 @@ df.corr()
     <tr style="text-align: right;">
       <th></th>
       <th>age</th>
+      <th>education</th>
       <th>balance</th>
       <th>day</th>
       <th>duration</th>
       <th>campaign</th>
       <th>pdays</th>
       <th>previous</th>
+      <th>subscribed</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>age</th>
       <td>1.000000</td>
+      <td>-0.173615</td>
       <td>0.097783</td>
       <td>-0.009120</td>
       <td>-0.004648</td>
       <td>0.004760</td>
       <td>-0.023758</td>
       <td>0.001288</td>
+      <td>0.025155</td>
+    </tr>
+    <tr>
+      <th>education</th>
+      <td>-0.173615</td>
+      <td>1.000000</td>
+      <td>0.050572</td>
+      <td>0.021661</td>
+      <td>0.002554</td>
+      <td>0.000194</td>
+      <td>0.007092</td>
+      <td>0.025295</td>
+      <td>0.051341</td>
     </tr>
     <tr>
       <th>balance</th>
       <td>0.097783</td>
+      <td>0.050572</td>
       <td>1.000000</td>
       <td>0.004503</td>
       <td>0.021560</td>
       <td>-0.014578</td>
       <td>0.003435</td>
       <td>0.016674</td>
+      <td>0.052838</td>
     </tr>
     <tr>
       <th>day</th>
       <td>-0.009120</td>
+      <td>0.021661</td>
       <td>0.004503</td>
       <td>1.000000</td>
       <td>-0.030206</td>
       <td>0.162490</td>
       <td>-0.093044</td>
       <td>-0.051710</td>
+      <td>-0.028348</td>
     </tr>
     <tr>
       <th>duration</th>
       <td>-0.004648</td>
+      <td>0.002554</td>
       <td>0.021560</td>
       <td>-0.030206</td>
       <td>1.000000</td>
       <td>-0.084570</td>
       <td>-0.001565</td>
       <td>0.001203</td>
+      <td>0.394521</td>
     </tr>
     <tr>
       <th>campaign</th>
       <td>0.004760</td>
+      <td>0.000194</td>
       <td>-0.014578</td>
       <td>0.162490</td>
       <td>-0.084570</td>
       <td>1.000000</td>
       <td>-0.088628</td>
       <td>-0.032855</td>
+      <td>-0.073172</td>
     </tr>
     <tr>
       <th>pdays</th>
       <td>-0.023758</td>
+      <td>0.007092</td>
       <td>0.003435</td>
       <td>-0.093044</td>
       <td>-0.001565</td>
       <td>-0.088628</td>
       <td>1.000000</td>
       <td>0.454820</td>
+      <td>0.103621</td>
     </tr>
     <tr>
       <th>previous</th>
       <td>0.001288</td>
+      <td>0.025295</td>
       <td>0.016674</td>
       <td>-0.051710</td>
       <td>0.001203</td>
       <td>-0.032855</td>
       <td>0.454820</td>
+      <td>1.000000</td>
+      <td>0.093236</td>
+    </tr>
+    <tr>
+      <th>subscribed</th>
+      <td>0.025155</td>
+      <td>0.051341</td>
+      <td>0.052838</td>
+      <td>-0.028348</td>
+      <td>0.394521</td>
+      <td>-0.073172</td>
+      <td>0.103621</td>
+      <td>0.093236</td>
       <td>1.000000</td>
     </tr>
   </tbody>
@@ -1662,11 +1702,17 @@ df.corr()
 
 
 ```python
-# plt.subplots(figsize=(10,10)) 
-# sns.heatmap(df.corr(), cbar=True, cmap="RdBu_r")
-# plt.title("Correlation Matrix", fontsize=8)
-# plt.show()
+plt.subplots(figsize=(10,5)) 
+sns.heatmap(df.corr(), cbar=True, cmap="RdBu_r")
+plt.title("Correlation Matrix", fontsize=18)
+plt.show()
 ```
+
+
+    
+![png](output_50_0.png)
+    
+
 
 
 ```python
@@ -1697,10 +1743,10 @@ for column in check_value_occerrence:
     dtype: int64
     
     education
-    primary       6851
-    secondary    23202
-    tertiary     13301
-    unknown       1857
+    0     1857
+    1     6851
+    2    23202
+    3    13301
     dtype: int64
     
     default
@@ -1746,9 +1792,9 @@ for column in check_value_occerrence:
     unknown    36959
     dtype: int64
     
-    y
-    no     39922
-    yes     5289
+    subscribed
+    0    39922
+    1     5289
     dtype: int64
     
     
@@ -1765,23 +1811,23 @@ df.dtypes
 
 
 
-    age           int64
-    job          object
-    marital      object
-    education    object
-    default      object
-    balance       int64
-    housing      object
-    loan         object
-    contact      object
-    day           int64
-    month        object
-    duration      int64
-    campaign      int64
-    pdays         int64
-    previous      int64
-    poutcome     object
-    y            object
+    age            int64
+    job           object
+    marital       object
+    education      int64
+    default       object
+    balance        int64
+    housing       object
+    loan          object
+    contact       object
+    day            int64
+    month         object
+    duration       int64
+    campaign       int64
+    pdays          int64
+    previous       int64
+    poutcome      object
+    subscribed     int32
     dtype: object
 
 
@@ -1804,7 +1850,6 @@ df[object_data].isnull().sum()
     contact      0
     month        0
     poutcome     0
-    y            0
     dtype: int64
 
 
@@ -1841,7 +1886,7 @@ encoded_df.dtypes
     pdays                   int64
     previous                int64
     poutcome             category
-    y                    category
+    subscribed              int32
     job_encoded              int8
     marital_encoded          int8
     education_encoded        int8
@@ -1851,7 +1896,6 @@ encoded_df.dtypes
     contact_encoded          int8
     month_encoded            int8
     poutcome_encoded         int8
-    y_encoded                int8
     dtype: object
 
 
@@ -1893,6 +1937,7 @@ encoded_df
       <th>contact</th>
       <th>day</th>
       <th>...</th>
+      <th>subscribed</th>
       <th>job_encoded</th>
       <th>marital_encoded</th>
       <th>education_encoded</th>
@@ -1902,7 +1947,6 @@ encoded_df
       <th>contact_encoded</th>
       <th>month_encoded</th>
       <th>poutcome_encoded</th>
-      <th>y_encoded</th>
     </tr>
   </thead>
   <tbody>
@@ -1911,7 +1955,7 @@ encoded_df
       <td>58</td>
       <td>management</td>
       <td>married</td>
-      <td>tertiary</td>
+      <td>3</td>
       <td>no</td>
       <td>2143</td>
       <td>yes</td>
@@ -1919,23 +1963,23 @@ encoded_df
       <td>unknown</td>
       <td>5</td>
       <td>...</td>
+      <td>0</td>
       <td>4</td>
       <td>1</td>
-      <td>2</td>
+      <td>3</td>
       <td>0</td>
       <td>1</td>
       <td>0</td>
       <td>2</td>
       <td>8</td>
       <td>3</td>
-      <td>0</td>
     </tr>
     <tr>
       <th>1</th>
       <td>44</td>
       <td>technician</td>
       <td>single</td>
-      <td>secondary</td>
+      <td>2</td>
       <td>no</td>
       <td>29</td>
       <td>yes</td>
@@ -1943,23 +1987,23 @@ encoded_df
       <td>unknown</td>
       <td>5</td>
       <td>...</td>
+      <td>0</td>
       <td>9</td>
       <td>2</td>
-      <td>1</td>
+      <td>2</td>
       <td>0</td>
       <td>1</td>
       <td>0</td>
       <td>2</td>
       <td>8</td>
       <td>3</td>
-      <td>0</td>
     </tr>
     <tr>
       <th>2</th>
       <td>33</td>
       <td>entrepreneur</td>
       <td>married</td>
-      <td>secondary</td>
+      <td>2</td>
       <td>no</td>
       <td>2</td>
       <td>yes</td>
@@ -1967,23 +2011,23 @@ encoded_df
       <td>unknown</td>
       <td>5</td>
       <td>...</td>
+      <td>0</td>
       <td>2</td>
       <td>1</td>
-      <td>1</td>
+      <td>2</td>
       <td>0</td>
       <td>1</td>
       <td>1</td>
       <td>2</td>
       <td>8</td>
       <td>3</td>
-      <td>0</td>
     </tr>
     <tr>
       <th>3</th>
       <td>47</td>
       <td>blue-collar</td>
       <td>married</td>
-      <td>unknown</td>
+      <td>0</td>
       <td>no</td>
       <td>1506</td>
       <td>yes</td>
@@ -1991,23 +2035,23 @@ encoded_df
       <td>unknown</td>
       <td>5</td>
       <td>...</td>
+      <td>0</td>
       <td>1</td>
       <td>1</td>
-      <td>3</td>
+      <td>0</td>
       <td>0</td>
       <td>1</td>
       <td>0</td>
       <td>2</td>
       <td>8</td>
       <td>3</td>
-      <td>0</td>
     </tr>
     <tr>
       <th>4</th>
       <td>33</td>
       <td>unknown</td>
       <td>single</td>
-      <td>unknown</td>
+      <td>0</td>
       <td>no</td>
       <td>1</td>
       <td>no</td>
@@ -2015,16 +2059,16 @@ encoded_df
       <td>unknown</td>
       <td>5</td>
       <td>...</td>
+      <td>0</td>
       <td>11</td>
       <td>2</td>
-      <td>3</td>
+      <td>0</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
       <td>2</td>
       <td>8</td>
       <td>3</td>
-      <td>0</td>
     </tr>
     <tr>
       <th>...</th>
@@ -2055,7 +2099,7 @@ encoded_df
       <td>51</td>
       <td>technician</td>
       <td>married</td>
-      <td>tertiary</td>
+      <td>3</td>
       <td>no</td>
       <td>825</td>
       <td>no</td>
@@ -2063,23 +2107,23 @@ encoded_df
       <td>cellular</td>
       <td>17</td>
       <td>...</td>
+      <td>1</td>
       <td>9</td>
       <td>1</td>
-      <td>2</td>
+      <td>3</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
       <td>9</td>
       <td>3</td>
-      <td>1</td>
     </tr>
     <tr>
       <th>45207</th>
       <td>71</td>
       <td>retired</td>
       <td>divorced</td>
-      <td>primary</td>
+      <td>1</td>
       <td>no</td>
       <td>1729</td>
       <td>no</td>
@@ -2087,23 +2131,23 @@ encoded_df
       <td>cellular</td>
       <td>17</td>
       <td>...</td>
+      <td>1</td>
       <td>5</td>
       <td>0</td>
-      <td>0</td>
+      <td>1</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
       <td>9</td>
       <td>3</td>
-      <td>1</td>
     </tr>
     <tr>
       <th>45208</th>
       <td>72</td>
       <td>retired</td>
       <td>married</td>
-      <td>secondary</td>
+      <td>2</td>
       <td>no</td>
       <td>5715</td>
       <td>no</td>
@@ -2111,23 +2155,23 @@ encoded_df
       <td>cellular</td>
       <td>17</td>
       <td>...</td>
+      <td>1</td>
       <td>5</td>
       <td>1</td>
-      <td>1</td>
+      <td>2</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
       <td>9</td>
       <td>2</td>
-      <td>1</td>
     </tr>
     <tr>
       <th>45209</th>
       <td>57</td>
       <td>blue-collar</td>
       <td>married</td>
-      <td>secondary</td>
+      <td>2</td>
       <td>no</td>
       <td>668</td>
       <td>no</td>
@@ -2135,23 +2179,23 @@ encoded_df
       <td>telephone</td>
       <td>17</td>
       <td>...</td>
+      <td>0</td>
       <td>1</td>
       <td>1</td>
-      <td>1</td>
+      <td>2</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
       <td>1</td>
       <td>9</td>
       <td>3</td>
-      <td>0</td>
     </tr>
     <tr>
       <th>45210</th>
       <td>37</td>
       <td>entrepreneur</td>
       <td>married</td>
-      <td>secondary</td>
+      <td>2</td>
       <td>no</td>
       <td>2971</td>
       <td>no</td>
@@ -2159,20 +2203,20 @@ encoded_df
       <td>cellular</td>
       <td>17</td>
       <td>...</td>
+      <td>0</td>
       <td>2</td>
       <td>1</td>
-      <td>1</td>
+      <td>2</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
       <td>9</td>
       <td>1</td>
-      <td>0</td>
     </tr>
   </tbody>
 </table>
-<p>45211 rows × 27 columns</p>
+<p>45211 rows × 26 columns</p>
 </div>
 
 
@@ -2187,10 +2231,9 @@ encoded_df.columns
 
     Index(['age', 'job', 'marital', 'education', 'default', 'balance', 'housing',
            'loan', 'contact', 'day', 'month', 'duration', 'campaign', 'pdays',
-           'previous', 'poutcome', 'y', 'job_encoded', 'marital_encoded',
+           'previous', 'poutcome', 'subscribed', 'job_encoded', 'marital_encoded',
            'education_encoded', 'default_encoded', 'housing_encoded',
-           'loan_encoded', 'contact_encoded', 'month_encoded', 'poutcome_encoded',
-           'y_encoded'],
+           'loan_encoded', 'contact_encoded', 'month_encoded', 'poutcome_encoded'],
           dtype='object')
 
 
@@ -2205,9 +2248,9 @@ encoded_df.columns
 
 
     Index(['age', 'balance', 'day', 'duration', 'campaign', 'pdays', 'previous',
-           'job_encoded', 'marital_encoded', 'education_encoded',
+           'subscribed', 'job_encoded', 'marital_encoded', 'education_encoded',
            'default_encoded', 'housing_encoded', 'loan_encoded', 'contact_encoded',
-           'month_encoded', 'poutcome_encoded', 'y_encoded'],
+           'month_encoded', 'poutcome_encoded'],
           dtype='object')
 
 
@@ -2215,7 +2258,9 @@ encoded_df.columns
 
 ```python
 plt.subplots(figsize=(25,10)) 
-sns.heatmap(encoded_df.corr(), cbar=True, cmap="RdBu_r", annot=True)
+sns.heatmap(encoded_df[['job_encoded', 'marital_encoded', 'education_encoded',
+       'default_encoded', 'housing_encoded', 'loan_encoded', 'contact_encoded',
+       'month_encoded', 'poutcome_encoded', 'subscribed']].corr(), cbar=True, cmap="RdBu_r", annot=True)
 plt.title("Correlation Matrix", fontsize=18)
 plt.show()
 ```
@@ -2230,18 +2275,18 @@ plt.show()
 ```python
 #defaut feature does not play imp role
 print(encoded_df.groupby(['default_encoded']).size())
-print(encoded_df.groupby(['y_encoded','default_encoded']).size())
+print(encoded_df.groupby(['subscribed','default_encoded']).size())
 ```
 
     default_encoded
     0    44396
     1      815
     dtype: int64
-    y_encoded  default_encoded
-    0          0                  39159
-               1                    763
-    1          0                   5237
-               1                     52
+    subscribed  default_encoded
+    0           0                  39159
+                1                    763
+    1           0                   5237
+                1                     52
     dtype: int64
     
 
@@ -2251,7 +2296,7 @@ print('10 most frequent values in the column "previous":')
 print(encoded_df.groupby(['previous']).size()[:10])
 print()
 print("Data in previous column compared to the 'y':")
-print(encoded_df.groupby(['y_encoded','previous']).size())
+print(encoded_df.groupby(['subscribed','previous']).size())
 ```
 
     10 most frequent values in the column "previous":
@@ -2269,25 +2314,25 @@ print(encoded_df.groupby(['y_encoded','previous']).size())
     dtype: int64
     
     Data in previous column compared to the 'y':
-    y_encoded  previous
-    0          0           33570
-               1            2189
-               2            1650
-               3             848
-               4             543
-                           ...  
-    1          26              1
-               29              1
-               30              1
-               55              1
-               58              1
+    subscribed  previous
+    0           0           33570
+                1            2189
+                2            1650
+                3             848
+                4             543
+                            ...  
+    1           26              1
+                29              1
+                30              1
+                55              1
+                58              1
     Length: 66, dtype: int64
     
 
 
 ```python
 print(encoded_df.groupby(['pdays']).size())
-print(encoded_df.groupby(['y_encoded','pdays']).size())
+print(encoded_df.groupby(['subscribed','pdays']).size())
 ```
 
     pdays
@@ -2303,18 +2348,18 @@ print(encoded_df.groupby(['y_encoded','pdays']).size())
      854        1
      871        1
     Length: 559, dtype: int64
-    y_encoded  pdays
-    0          -1       33570
-                1           9
-                2          35
-                3           1
-                4           1
-                        ...  
-    1           804         1
-                805         1
-                828         1
-                842         1
-                854         1
+    subscribed  pdays
+    0           -1       33570
+                 1           9
+                 2          35
+                 3           1
+                 4           1
+                         ...  
+    1            804         1
+                 805         1
+                 828         1
+                 842         1
+                 854         1
     Length: 914, dtype: int64
     
 
@@ -2327,6 +2372,103 @@ encoded_df.shape
 
 
     (45211, 17)
+
+
+
+### Dropping non-related columns
+- **default:** It has 44369 'no' values. It denotes that 44369 out of 45211 customers do not have a credit in default.
+- **contact:** This column can't contribute anymore in our prediction as the standard meddium of communication is 'cellular' now.
+- **month and day:** We can drop these two columns as they aren't showing any significant correlation with our target variable.
+- **pdays and previous:** Most frequent values in these two columns are -1, and 0. both these values have a frequency of 36954 and are pointing towards the same  fact. We can drop both of them as they aren't showing any significant correlation with our target variable.
+- **poutcome:** We will drop this column as it has 36959 'unknown' values, also it isn't showing any significant correlation with the target.
+
+
+```python
+df.drop(['default', 'contact', 'month', 'day', 'pdays', 'previous', 'poutcome'], axis=1, inplace= True)
+```
+
+
+```python
+df.shape
+```
+
+
+
+
+    (45211, 10)
+
+
+
+
+```python
+df[(df['job']=='unknown') & (df['education']=='unknown')].count()
+```
+
+
+
+
+    age           0
+    job           0
+    marital       0
+    education     0
+    balance       0
+    housing       0
+    loan          0
+    duration      0
+    campaign      0
+    subscribed    0
+    dtype: int64
+
+
+
+### Dropping rows with unknown values
+- We are dropping the rows with 'unknown' as entry from the education and job column. Column 'education' has 1857, and 'job' has 288 unknown values.
+- A total of 127 rows have 'unknown' entry in both the education and job column.
+- Dropping these entries will removes a total of 2018 values from our dataframe.
+
+
+```python
+df.drop(df[df['job']=='unknown'].index, inplace=True)
+# in the education column we have asssigned the value 0 to 'unknown'
+df.drop(df[df['education']==0].index, inplace=True)
+```
+
+
+```python
+df.shape
+```
+
+
+
+
+    (43193, 10)
+
+
+
+
+```python
+df.keys()
+```
+
+
+
+
+    Index(['age', 'job', 'marital', 'education', 'balance', 'housing', 'loan',
+           'duration', 'campaign', 'subscribed'],
+          dtype='object')
+
+
+
+
+```python
+object_data = [data for data in df.dtypes[df.dtypes == 'object'].index]
+object_data
+```
+
+
+
+
+    ['job', 'marital', 'housing', 'loan']
 
 
 
@@ -2369,17 +2511,14 @@ obj_data_ohe.head()
       <th>job_services</th>
       <th>job_student</th>
       <th>job_technician</th>
-      <th>...</th>
-      <th>month_may</th>
-      <th>month_nov</th>
-      <th>month_oct</th>
-      <th>month_sep</th>
-      <th>poutcome_failure</th>
-      <th>poutcome_other</th>
-      <th>poutcome_success</th>
-      <th>poutcome_unknown</th>
-      <th>y_no</th>
-      <th>y_yes</th>
+      <th>job_unemployed</th>
+      <th>marital_divorced</th>
+      <th>marital_married</th>
+      <th>marital_single</th>
+      <th>housing_no</th>
+      <th>housing_yes</th>
+      <th>loan_no</th>
+      <th>loan_yes</th>
     </tr>
   </thead>
   <tbody>
@@ -2395,12 +2534,9 @@ obj_data_ohe.head()
       <td>0</td>
       <td>0</td>
       <td>0</td>
-      <td>...</td>
+      <td>0</td>
+      <td>0</td>
       <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
       <td>0</td>
       <td>0</td>
       <td>1</td>
@@ -2419,13 +2555,10 @@ obj_data_ohe.head()
       <td>0</td>
       <td>0</td>
       <td>1</td>
-      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
       <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
       <td>0</td>
       <td>1</td>
       <td>1</td>
@@ -2443,12 +2576,30 @@ obj_data_ohe.head()
       <td>0</td>
       <td>0</td>
       <td>0</td>
-      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
       <td>1</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
       <td>0</td>
       <td>0</td>
       <td>1</td>
@@ -2456,19 +2607,14 @@ obj_data_ohe.head()
       <td>0</td>
     </tr>
     <tr>
-      <th>3</th>
+      <th>6</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
       <td>0</td>
       <td>1</td>
       <td>0</td>
       <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>1</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -2476,36 +2622,13 @@ obj_data_ohe.head()
       <td>0</td>
       <td>0</td>
       <td>1</td>
-      <td>1</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>...</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
       <td>0</td>
       <td>1</td>
-      <td>1</td>
       <td>0</td>
+      <td>1</td>
     </tr>
   </tbody>
 </table>
-<p>5 rows × 46 columns</p>
 </div>
 
 
@@ -2520,23 +2643,30 @@ obj_data_ohe.keys()
 
     Index(['job_admin.', 'job_blue-collar', 'job_entrepreneur', 'job_housemaid',
            'job_management', 'job_retired', 'job_self-employed', 'job_services',
-           'job_student', 'job_technician', 'job_unemployed', 'job_unknown',
-           'marital_divorced', 'marital_married', 'marital_single',
-           'education_primary', 'education_secondary', 'education_tertiary',
-           'education_unknown', 'default_no', 'default_yes', 'housing_no',
-           'housing_yes', 'loan_no', 'loan_yes', 'contact_cellular',
-           'contact_telephone', 'contact_unknown', 'month_apr', 'month_aug',
-           'month_dec', 'month_feb', 'month_jan', 'month_jul', 'month_jun',
-           'month_mar', 'month_may', 'month_nov', 'month_oct', 'month_sep',
-           'poutcome_failure', 'poutcome_other', 'poutcome_success',
-           'poutcome_unknown', 'y_no', 'y_yes'],
+           'job_student', 'job_technician', 'job_unemployed', 'marital_divorced',
+           'marital_married', 'marital_single', 'housing_no', 'housing_yes',
+           'loan_no', 'loan_yes'],
           dtype='object')
 
 
 
 
 ```python
+obj_data_ohe.shape
+```
+
+
+
+
+    (43193, 18)
+
+
+
+
+```python
 df_ohe = pd.concat([df_ohe, obj_data_ohe], axis=1)
+df_ohe.drop('subscribed', axis=1, inplace=True)
+df_ohe['subscribed'] = df['subscribed']
 ```
 
 
@@ -2547,26 +2677,20 @@ df_ohe.keys()
 
 
 
-    Index(['age', 'job', 'marital', 'education', 'default', 'balance', 'housing',
-           'loan', 'contact', 'day', 'month', 'duration', 'campaign', 'pdays',
-           'previous', 'poutcome', 'y', 'job_admin.', 'job_blue-collar',
+    Index(['age', 'job', 'marital', 'education', 'balance', 'housing', 'loan',
+           'duration', 'campaign', 'job_admin.', 'job_blue-collar',
            'job_entrepreneur', 'job_housemaid', 'job_management', 'job_retired',
            'job_self-employed', 'job_services', 'job_student', 'job_technician',
-           'job_unemployed', 'job_unknown', 'marital_divorced', 'marital_married',
-           'marital_single', 'education_primary', 'education_secondary',
-           'education_tertiary', 'education_unknown', 'default_no', 'default_yes',
-           'housing_no', 'housing_yes', 'loan_no', 'loan_yes', 'contact_cellular',
-           'contact_telephone', 'contact_unknown', 'month_apr', 'month_aug',
-           'month_dec', 'month_feb', 'month_jan', 'month_jul', 'month_jun',
-           'month_mar', 'month_may', 'month_nov', 'month_oct', 'month_sep',
-           'poutcome_failure', 'poutcome_other', 'poutcome_success',
-           'poutcome_unknown', 'y_no', 'y_yes'],
+           'job_unemployed', 'marital_divorced', 'marital_married',
+           'marital_single', 'housing_no', 'housing_yes', 'loan_no', 'loan_yes',
+           'subscribed'],
           dtype='object')
 
 
 
 
 ```python
+# Dropping object data from dataframe df_ohe, as we are going to use the encoded columns
 df_ohe.drop(object_data, axis=1, inplace=True)
 ```
 
@@ -2578,84 +2702,358 @@ df_ohe.keys()
 
 
 
-    Index(['age', 'balance', 'day', 'duration', 'campaign', 'pdays', 'previous',
-           'job_admin.', 'job_blue-collar', 'job_entrepreneur', 'job_housemaid',
+    Index(['age', 'education', 'balance', 'duration', 'campaign', 'job_admin.',
+           'job_blue-collar', 'job_entrepreneur', 'job_housemaid',
            'job_management', 'job_retired', 'job_self-employed', 'job_services',
-           'job_student', 'job_technician', 'job_unemployed', 'job_unknown',
-           'marital_divorced', 'marital_married', 'marital_single',
-           'education_primary', 'education_secondary', 'education_tertiary',
-           'education_unknown', 'default_no', 'default_yes', 'housing_no',
-           'housing_yes', 'loan_no', 'loan_yes', 'contact_cellular',
-           'contact_telephone', 'contact_unknown', 'month_apr', 'month_aug',
-           'month_dec', 'month_feb', 'month_jan', 'month_jul', 'month_jun',
-           'month_mar', 'month_may', 'month_nov', 'month_oct', 'month_sep',
-           'poutcome_failure', 'poutcome_other', 'poutcome_success',
-           'poutcome_unknown', 'y_no', 'y_yes'],
+           'job_student', 'job_technician', 'job_unemployed', 'marital_divorced',
+           'marital_married', 'marital_single', 'housing_no', 'housing_yes',
+           'loan_no', 'loan_yes', 'subscribed'],
           dtype='object')
 
 
 
 
 ```python
-plt.subplots(figsize=(25,20)) 
-sns.heatmap(df_ohe.corr(), cbar=True, cmap="RdBu_r")
-plt.title("Correlation Matrix", fontsize=18)
-plt.show()
+df_ohe.shape
 ```
 
 
+
+
+    (43193, 24)
+
+
+
+### Summary of Feature engneering
+
+
+```python
+print('Total number of features:', len(df_ohe.keys()))
+print('Numerical Features:',len(df_ohe.keys()) - len(obj_data_ohe.keys()))
+print('Encoded Categorical Features:', len(obj_data_ohe.keys()))
+```
+
+    Total number of features: 24
+    Numerical Features: 6
+    Encoded Categorical Features: 18
     
-![png](output_71_0.png)
+
+
+```python
+# Checking for any null values
+df_ohe.isnull().sum().sort_values(ascending = False)
+```
+
+
+
+
+    age                  0
+    education            0
+    loan_yes             0
+    loan_no              0
+    housing_yes          0
+    housing_no           0
+    marital_single       0
+    marital_married      0
+    marital_divorced     0
+    job_unemployed       0
+    job_technician       0
+    job_student          0
+    job_services         0
+    job_self-employed    0
+    job_retired          0
+    job_management       0
+    job_housemaid        0
+    job_entrepreneur     0
+    job_blue-collar      0
+    job_admin.           0
+    campaign             0
+    duration             0
+    balance              0
+    subscribed           0
+    dtype: int64
+
+
+
+
+```python
+# Copying data to a new dataframe, which includes the columns of interest.
+df_model = df_ohe.copy()
+
+print("Columns of our interest:")
+
+for col in df_model:
+    print(f'\t\t\t{col}')
+```
+
+    Columns of our interest:
+    			age
+    			education
+    			balance
+    			duration
+    			campaign
+    			job_admin.
+    			job_blue-collar
+    			job_entrepreneur
+    			job_housemaid
+    			job_management
+    			job_retired
+    			job_self-employed
+    			job_services
+    			job_student
+    			job_technician
+    			job_unemployed
+    			marital_divorced
+    			marital_married
+    			marital_single
+    			housing_no
+    			housing_yes
+    			loan_no
+    			loan_yes
+    			subscribed
     
 
 
-
 ```python
-df.shape
+df_model[list(df_model.columns)[:12]].head()
 ```
 
 
 
 
-    (45211, 17)
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>age</th>
+      <th>education</th>
+      <th>balance</th>
+      <th>duration</th>
+      <th>campaign</th>
+      <th>job_admin.</th>
+      <th>job_blue-collar</th>
+      <th>job_entrepreneur</th>
+      <th>job_housemaid</th>
+      <th>job_management</th>
+      <th>job_retired</th>
+      <th>job_self-employed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>58</td>
+      <td>3</td>
+      <td>2143</td>
+      <td>261</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>44</td>
+      <td>2</td>
+      <td>29</td>
+      <td>151</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>33</td>
+      <td>2</td>
+      <td>2</td>
+      <td>76</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>35</td>
+      <td>3</td>
+      <td>231</td>
+      <td>139</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>28</td>
+      <td>3</td>
+      <td>447</td>
+      <td>217</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 
 
-
-### Dropping non-related columns
-- **default:** It has 44369 'no' values. It denotes that 44369 out of 45211 customers do not have a credit in default.
-- **contact:** This column can't contribute anymore in our prediction as the standard meddium of communication is 'cellular' now.
-- **month and day:** We can drop these two columns as they aren't showing any significant correlation with our target variable.
-- **pdays and previous:** Most frequent values in these two columns are -1, and 0. both these values have a frequency of 36954 and are pointing towards the same  fact. We can drop both of them as they aren't showing any significant correlation with our target variable.
-- **poutcome:** We will drop this column as it has 36959 'unknown' values, also it isn't showing any significant correlation with the target.
 
 
 ```python
-df.drop(['default', 'contact', 'month', 'day', 'pdays', 'previous', 'poutcome'], axis=1, inplace= True)
-```
-
-
-```python
-df.shape
+df_model[list(df_model.columns)[12:]].head()
 ```
 
 
 
 
-    (45211, 10)
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
 
-
-
-```python
-df.keys()
-```
-
-
-
-
-    Index(['age', 'job', 'marital', 'education', 'balance', 'housing', 'loan',
-           'duration', 'campaign', 'y'],
-          dtype='object')
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>job_services</th>
+      <th>job_student</th>
+      <th>job_technician</th>
+      <th>job_unemployed</th>
+      <th>marital_divorced</th>
+      <th>marital_married</th>
+      <th>marital_single</th>
+      <th>housing_no</th>
+      <th>housing_yes</th>
+      <th>loan_no</th>
+      <th>loan_yes</th>
+      <th>subscribed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 
 
 

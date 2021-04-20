@@ -74,6 +74,35 @@ plt.show()
     
 
 
+
+```python
+df.isnull().sum()
+```
+
+
+
+
+    age          0
+    job          0
+    marital      0
+    education    0
+    default      0
+    balance      0
+    housing      0
+    loan         0
+    contact      0
+    day          0
+    month        0
+    duration     0
+    campaign     0
+    pdays        0
+    previous     0
+    poutcome     0
+    y            0
+    dtype: int64
+
+
+
 There are no null values.
 
 ### Overview of available data
@@ -1111,43 +1140,43 @@ for col in numerical_data :
 
 
     
-![png](output_34_0.png)
+![png](output_35_0.png)
     
 
 
 
     
-![png](output_34_1.png)
+![png](output_35_1.png)
     
 
 
 
     
-![png](output_34_2.png)
+![png](output_35_2.png)
     
 
 
 
     
-![png](output_34_3.png)
+![png](output_35_3.png)
     
 
 
 
     
-![png](output_34_4.png)
+![png](output_35_4.png)
     
 
 
 
     
-![png](output_34_5.png)
+![png](output_35_5.png)
     
 
 
 
     
-![png](output_34_6.png)
+![png](output_35_6.png)
     
 
 
@@ -1172,25 +1201,25 @@ for col in numerical_data :
 
 
     
-![png](output_36_0.png)
+![png](output_37_0.png)
     
 
 
 
     
-![png](output_36_1.png)
+![png](output_37_1.png)
     
 
 
 
     
-![png](output_36_2.png)
+![png](output_37_2.png)
     
 
 
 
     
-![png](output_36_3.png)
+![png](output_37_3.png)
     
 
 
@@ -1198,46 +1227,34 @@ Balance, duration, pdays can be stored in bins
 
 
 ```python
-balance_bins = pd.cut(df['balance'], bins=2)
-duration_bins = pd.cut(df['duration'], bins=3)
-pdays_bins = pd.cut(df['pdays'], bins=2)
-data_bins = [balance_bins, duration_bins, pdays_bins]
-
-bin_names = ['balance_bins', 'duration_bins', 'pdays_bins']
-
+plt.subplots(figsize=(20,5)) 
 plt.rcParams.update({'font.size': 12})
+    
+plt.subplot(1, 2, 1)
+sns.histplot(x = df['balance'], data = df)
+plt.ylabel('Count')
 
-for bin_index in range(0, len(data_bins), 2): 
-    plt.figure(figsize=(16,4))
-    
-    index = bin_index
-    bin_name = data_bins[index]
-    
-    plt.subplot(1, 2, 1)
-    sns.countplot(x = bin_name, data = df)
-    plt.xlabel(f'{bin_names[index]}')
-    plt.ylabel('Count')
-    index += 1
-    
-    if index != 3:
-        bin_name = data_bins[index]
-        plt.subplot(1, 2, 2)
-        sns.countplot(x = bin_name, data = df)
-        plt.xlabel(f'{bin_names[index]}')
-        plt.ylabel('Count')
+plt.subplot(1, 2, 2)
+sns.histplot(x = df['duration'], data = df)
+plt.ylabel('Count')
+plt.show()
 
-    plt.show()
+plt.subplot()
+sns.histplot(x = df['pdays'], data = df)
+plt.ylabel('Count')
+
+plt.show()
 ```
 
 
     
-![png](output_38_0.png)
+![png](output_39_0.png)
     
 
 
 
     
-![png](output_38_1.png)
+![png](output_39_1.png)
     
 
 
@@ -1307,31 +1324,31 @@ for col in range(1, len(object_data) - 1, 2):
 
 
     
-![png](output_43_0.png)
+![png](output_44_0.png)
     
 
 
 
     
-![png](output_43_1.png)
+![png](output_44_1.png)
     
 
 
 
     
-![png](output_43_2.png)
+![png](output_44_2.png)
     
 
 
 
     
-![png](output_43_3.png)
+![png](output_44_3.png)
     
 
 
 
     
-![png](output_43_4.png)
+![png](output_44_4.png)
     
 
 
@@ -1378,31 +1395,31 @@ for col in range(1, len(object_data) - 1, 2):
 
 
     
-![png](output_45_0.png)
+![png](output_46_0.png)
     
 
 
 
     
-![png](output_45_1.png)
+![png](output_46_1.png)
     
 
 
 
     
-![png](output_45_2.png)
+![png](output_46_2.png)
     
 
 
 
     
-![png](output_45_3.png)
+![png](output_46_3.png)
     
 
 
 
     
-![png](output_45_4.png)
+![png](output_46_4.png)
     
 
 
@@ -2162,20 +2179,6 @@ encoded_df
 
 
 ```python
-plt.subplots(figsize=(25,10)) 
-sns.heatmap(encoded_df.corr(), cbar=True, cmap="RdBu_r", annot=True)
-plt.title("Correlation Matrix", fontsize=18)
-plt.show()
-```
-
-
-    
-![png](output_57_0.png)
-    
-
-
-
-```python
 encoded_df.columns
 ```
 
@@ -2211,7 +2214,21 @@ encoded_df.columns
 
 
 ```python
-#defaut features does not play imp role
+plt.subplots(figsize=(25,10)) 
+sns.heatmap(encoded_df.corr(), cbar=True, cmap="RdBu_r", annot=True)
+plt.title("Correlation Matrix", fontsize=18)
+plt.show()
+```
+
+
+    
+![png](output_60_0.png)
+    
+
+
+
+```python
+#defaut feature does not play imp role
 print(encoded_df.groupby(['default_encoded']).size())
 print(encoded_df.groupby(['y_encoded','default_encoded']).size())
 ```
@@ -2315,7 +2332,10 @@ encoded_df.shape
 
 
 ```python
-encoded_df.drop(['pdays', 'default_encoded', 'previous'], axis=1)
+#with one hot encoding
+df_ohe = df.copy()
+obj_data_ohe = pd.get_dummies(df_ohe[object_data],drop_first = False)
+obj_data_ohe.head()
 ```
 
 
@@ -2339,214 +2359,303 @@ encoded_df.drop(['pdays', 'default_encoded', 'previous'], axis=1)
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>age</th>
-      <th>balance</th>
-      <th>day</th>
-      <th>duration</th>
-      <th>campaign</th>
-      <th>job_encoded</th>
-      <th>marital_encoded</th>
-      <th>education_encoded</th>
-      <th>housing_encoded</th>
-      <th>loan_encoded</th>
-      <th>contact_encoded</th>
-      <th>month_encoded</th>
-      <th>poutcome_encoded</th>
-      <th>y_encoded</th>
+      <th>job_admin.</th>
+      <th>job_blue-collar</th>
+      <th>job_entrepreneur</th>
+      <th>job_housemaid</th>
+      <th>job_management</th>
+      <th>job_retired</th>
+      <th>job_self-employed</th>
+      <th>job_services</th>
+      <th>job_student</th>
+      <th>job_technician</th>
+      <th>...</th>
+      <th>month_may</th>
+      <th>month_nov</th>
+      <th>month_oct</th>
+      <th>month_sep</th>
+      <th>poutcome_failure</th>
+      <th>poutcome_other</th>
+      <th>poutcome_success</th>
+      <th>poutcome_unknown</th>
+      <th>y_no</th>
+      <th>y_yes</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>58</td>
-      <td>2143</td>
-      <td>5</td>
-      <td>261</td>
-      <td>1</td>
-      <td>4</td>
-      <td>1</td>
-      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
       <td>1</td>
       <td>0</td>
-      <td>2</td>
-      <td>8</td>
-      <td>3</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
       <td>0</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>44</td>
-      <td>29</td>
-      <td>5</td>
-      <td>151</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
       <td>1</td>
-      <td>9</td>
-      <td>2</td>
-      <td>1</td>
+      <td>...</td>
       <td>1</td>
       <td>0</td>
-      <td>2</td>
-      <td>8</td>
-      <td>3</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
       <td>0</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>33</td>
-      <td>2</td>
-      <td>5</td>
-      <td>76</td>
+      <td>0</td>
+      <td>0</td>
       <td>1</td>
-      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
       <td>1</td>
       <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>2</td>
-      <td>8</td>
-      <td>3</td>
       <td>0</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>47</td>
-      <td>1506</td>
-      <td>5</td>
-      <td>92</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>3</td>
+      <td>0</td>
       <td>1</td>
       <td>0</td>
-      <td>2</td>
-      <td>8</td>
-      <td>3</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
       <td>0</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>33</td>
-      <td>1</td>
-      <td>5</td>
-      <td>198</td>
-      <td>1</td>
-      <td>11</td>
-      <td>2</td>
-      <td>3</td>
-      <td>0</td>
-      <td>0</td>
-      <td>2</td>
-      <td>8</td>
-      <td>3</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>45206</th>
-      <td>51</td>
-      <td>825</td>
-      <td>17</td>
-      <td>977</td>
-      <td>3</td>
-      <td>9</td>
-      <td>1</td>
-      <td>2</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>9</td>
-      <td>3</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>45207</th>
-      <td>71</td>
-      <td>1729</td>
-      <td>17</td>
-      <td>456</td>
-      <td>2</td>
-      <td>5</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
-      <td>9</td>
-      <td>3</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>45208</th>
-      <td>72</td>
-      <td>5715</td>
-      <td>17</td>
-      <td>1127</td>
-      <td>5</td>
-      <td>5</td>
-      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
       <td>1</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
-      <td>9</td>
-      <td>2</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>45209</th>
-      <td>57</td>
-      <td>668</td>
-      <td>17</td>
-      <td>508</td>
-      <td>4</td>
-      <td>1</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>9</td>
-      <td>3</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>45210</th>
-      <td>37</td>
-      <td>2971</td>
-      <td>17</td>
-      <td>361</td>
-      <td>2</td>
-      <td>2</td>
-      <td>1</td>
-      <td>1</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
-      <td>9</td>
+      <td>1</td>
       <td>1</td>
       <td>0</td>
     </tr>
   </tbody>
 </table>
-<p>45211 rows × 14 columns</p>
+<p>5 rows × 46 columns</p>
 </div>
+
+
+
+
+```python
+obj_data_ohe.keys()
+```
+
+
+
+
+    Index(['job_admin.', 'job_blue-collar', 'job_entrepreneur', 'job_housemaid',
+           'job_management', 'job_retired', 'job_self-employed', 'job_services',
+           'job_student', 'job_technician', 'job_unemployed', 'job_unknown',
+           'marital_divorced', 'marital_married', 'marital_single',
+           'education_primary', 'education_secondary', 'education_tertiary',
+           'education_unknown', 'default_no', 'default_yes', 'housing_no',
+           'housing_yes', 'loan_no', 'loan_yes', 'contact_cellular',
+           'contact_telephone', 'contact_unknown', 'month_apr', 'month_aug',
+           'month_dec', 'month_feb', 'month_jan', 'month_jul', 'month_jun',
+           'month_mar', 'month_may', 'month_nov', 'month_oct', 'month_sep',
+           'poutcome_failure', 'poutcome_other', 'poutcome_success',
+           'poutcome_unknown', 'y_no', 'y_yes'],
+          dtype='object')
+
+
+
+
+```python
+df_ohe = pd.concat([df_ohe, obj_data_ohe], axis=1)
+```
+
+
+```python
+df_ohe.keys()
+```
+
+
+
+
+    Index(['age', 'job', 'marital', 'education', 'default', 'balance', 'housing',
+           'loan', 'contact', 'day', 'month', 'duration', 'campaign', 'pdays',
+           'previous', 'poutcome', 'y', 'job_admin.', 'job_blue-collar',
+           'job_entrepreneur', 'job_housemaid', 'job_management', 'job_retired',
+           'job_self-employed', 'job_services', 'job_student', 'job_technician',
+           'job_unemployed', 'job_unknown', 'marital_divorced', 'marital_married',
+           'marital_single', 'education_primary', 'education_secondary',
+           'education_tertiary', 'education_unknown', 'default_no', 'default_yes',
+           'housing_no', 'housing_yes', 'loan_no', 'loan_yes', 'contact_cellular',
+           'contact_telephone', 'contact_unknown', 'month_apr', 'month_aug',
+           'month_dec', 'month_feb', 'month_jan', 'month_jul', 'month_jun',
+           'month_mar', 'month_may', 'month_nov', 'month_oct', 'month_sep',
+           'poutcome_failure', 'poutcome_other', 'poutcome_success',
+           'poutcome_unknown', 'y_no', 'y_yes'],
+          dtype='object')
+
+
+
+
+```python
+df_ohe.drop(object_data, axis=1, inplace=True)
+```
+
+
+```python
+df_ohe.keys()
+```
+
+
+
+
+    Index(['age', 'balance', 'day', 'duration', 'campaign', 'pdays', 'previous',
+           'job_admin.', 'job_blue-collar', 'job_entrepreneur', 'job_housemaid',
+           'job_management', 'job_retired', 'job_self-employed', 'job_services',
+           'job_student', 'job_technician', 'job_unemployed', 'job_unknown',
+           'marital_divorced', 'marital_married', 'marital_single',
+           'education_primary', 'education_secondary', 'education_tertiary',
+           'education_unknown', 'default_no', 'default_yes', 'housing_no',
+           'housing_yes', 'loan_no', 'loan_yes', 'contact_cellular',
+           'contact_telephone', 'contact_unknown', 'month_apr', 'month_aug',
+           'month_dec', 'month_feb', 'month_jan', 'month_jul', 'month_jun',
+           'month_mar', 'month_may', 'month_nov', 'month_oct', 'month_sep',
+           'poutcome_failure', 'poutcome_other', 'poutcome_success',
+           'poutcome_unknown', 'y_no', 'y_yes'],
+          dtype='object')
+
+
+
+
+```python
+plt.subplots(figsize=(25,20)) 
+sns.heatmap(df_ohe.corr(), cbar=True, cmap="RdBu_r")
+plt.title("Correlation Matrix", fontsize=18)
+plt.show()
+```
+
+
+    
+![png](output_71_0.png)
+    
+
+
+
+```python
+df.shape
+```
+
+
+
+
+    (45211, 17)
+
+
+
+### Dropping non-related columns
+- **default:** It has 44369 'no' values. It denotes that 44369 out of 45211 customers do not have a credit in default.
+- **contact:** This column can't contribute anymore in our prediction as the standard meddium of communication is 'cellular' now.
+- **month and day:** We can drop these two columns as they aren't showing any significant correlation with our target variable.
+- **pdays and previous:** Most frequent values in these two columns are -1, and 0. both these values have a frequency of 36954 and are pointing towards the same  fact. We can drop both of them as they aren't showing any significant correlation with our target variable.
+- **poutcome:** We will drop this column as it has 36959 'unknown' values, also it isn't showing any significant correlation with the target.
+
+
+```python
+df.drop(['default', 'contact', 'month', 'day', 'pdays', 'previous', 'poutcome'], axis=1, inplace= True)
+```
+
+
+```python
+df.shape
+```
+
+
+
+
+    (45211, 10)
+
+
+
+
+```python
+df.keys()
+```
+
+
+
+
+    Index(['age', 'job', 'marital', 'education', 'balance', 'housing', 'loan',
+           'duration', 'campaign', 'y'],
+          dtype='object')
 
 
 

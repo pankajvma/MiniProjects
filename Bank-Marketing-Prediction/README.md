@@ -50,6 +50,30 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import warnings
 
+import time
+
+from sklearn import preprocessing
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.naive_bayes import GaussianNB
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.svm import SVC
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import AdaBoostClassifier
+from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.decomposition import PCA
+from sklearn import model_selection
+from sklearn.metrics import classification_report
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import accuracy_score
+
+from sklearn.metrics import f1_score
+from sklearn.metrics import precision_score
+from sklearn.metrics import recall_score
+
 warnings.filterwarnings('ignore')
 %matplotlib inline 
 
@@ -231,6 +255,18 @@ df.describe()
 
 
 
+
+```python
+# Adding a new column by name 'subscribed' to store the value '1' if subscribed, else '0' 
+df['subscribed'] = (df.y == 'yes').astype('int')
+df.drop('y', axis=1, inplace=True)
+```
+
+
+```python
+# sns.pairplot(df, hue='subscribed')
+```
+
 #### Quick Observations on Numerical Data
 - Total available data count is 45211 entries  
 - Mean Age of the contacted customers is 41 years (Approx)  
@@ -278,13 +314,11 @@ df.describe(include='object')
       <th>contact</th>
       <th>month</th>
       <th>poutcome</th>
-      <th>y</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>count</th>
-      <td>45211</td>
       <td>45211</td>
       <td>45211</td>
       <td>45211</td>
@@ -306,7 +340,6 @@ df.describe(include='object')
       <td>3</td>
       <td>12</td>
       <td>4</td>
-      <td>2</td>
     </tr>
     <tr>
       <th>top</th>
@@ -319,7 +352,6 @@ df.describe(include='object')
       <td>cellular</td>
       <td>may</td>
       <td>unknown</td>
-      <td>no</td>
     </tr>
     <tr>
       <th>freq</th>
@@ -332,7 +364,6 @@ df.describe(include='object')
       <td>29285</td>
       <td>13766</td>
       <td>36959</td>
-      <td>39922</td>
     </tr>
   </tbody>
 </table>
@@ -351,27 +382,27 @@ df.info()
     <class 'pandas.core.frame.DataFrame'>
     RangeIndex: 45211 entries, 0 to 45210
     Data columns (total 17 columns):
-     #   Column     Non-Null Count  Dtype 
-    ---  ------     --------------  ----- 
-     0   age        45211 non-null  int64 
-     1   job        45211 non-null  object
-     2   marital    45211 non-null  object
-     3   education  45211 non-null  object
-     4   default    45211 non-null  object
-     5   balance    45211 non-null  int64 
-     6   housing    45211 non-null  object
-     7   loan       45211 non-null  object
-     8   contact    45211 non-null  object
-     9   day        45211 non-null  int64 
-     10  month      45211 non-null  object
-     11  duration   45211 non-null  int64 
-     12  campaign   45211 non-null  int64 
-     13  pdays      45211 non-null  int64 
-     14  previous   45211 non-null  int64 
-     15  poutcome   45211 non-null  object
-     16  y          45211 non-null  object
-    dtypes: int64(7), object(10)
-    memory usage: 5.9+ MB
+     #   Column      Non-Null Count  Dtype 
+    ---  ------      --------------  ----- 
+     0   age         45211 non-null  int64 
+     1   job         45211 non-null  object
+     2   marital     45211 non-null  object
+     3   education   45211 non-null  object
+     4   default     45211 non-null  object
+     5   balance     45211 non-null  int64 
+     6   housing     45211 non-null  object
+     7   loan        45211 non-null  object
+     8   contact     45211 non-null  object
+     9   day         45211 non-null  int64 
+     10  month       45211 non-null  object
+     11  duration    45211 non-null  int64 
+     12  campaign    45211 non-null  int64 
+     13  pdays       45211 non-null  int64 
+     14  previous    45211 non-null  int64 
+     15  poutcome    45211 non-null  object
+     16  subscribed  45211 non-null  int32 
+    dtypes: int32(1), int64(7), object(9)
+    memory usage: 5.7+ MB
     
 
 
@@ -416,7 +447,7 @@ df.head(10)
       <th>pdays</th>
       <th>previous</th>
       <th>poutcome</th>
-      <th>y</th>
+      <th>subscribed</th>
     </tr>
   </thead>
   <tbody>
@@ -438,7 +469,7 @@ df.head(10)
       <td>-1</td>
       <td>0</td>
       <td>unknown</td>
-      <td>no</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>1</th>
@@ -458,7 +489,7 @@ df.head(10)
       <td>-1</td>
       <td>0</td>
       <td>unknown</td>
-      <td>no</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>2</th>
@@ -478,7 +509,7 @@ df.head(10)
       <td>-1</td>
       <td>0</td>
       <td>unknown</td>
-      <td>no</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>3</th>
@@ -498,7 +529,7 @@ df.head(10)
       <td>-1</td>
       <td>0</td>
       <td>unknown</td>
-      <td>no</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>4</th>
@@ -518,7 +549,7 @@ df.head(10)
       <td>-1</td>
       <td>0</td>
       <td>unknown</td>
-      <td>no</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>5</th>
@@ -538,7 +569,7 @@ df.head(10)
       <td>-1</td>
       <td>0</td>
       <td>unknown</td>
-      <td>no</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>6</th>
@@ -558,7 +589,7 @@ df.head(10)
       <td>-1</td>
       <td>0</td>
       <td>unknown</td>
-      <td>no</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>7</th>
@@ -578,7 +609,7 @@ df.head(10)
       <td>-1</td>
       <td>0</td>
       <td>unknown</td>
-      <td>no</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>8</th>
@@ -598,7 +629,7 @@ df.head(10)
       <td>-1</td>
       <td>0</td>
       <td>unknown</td>
-      <td>no</td>
+      <td>0</td>
     </tr>
     <tr>
       <th>9</th>
@@ -618,7 +649,7 @@ df.head(10)
       <td>-1</td>
       <td>0</td>
       <td>unknown</td>
-      <td>no</td>
+      <td>0</td>
     </tr>
   </tbody>
 </table>
@@ -640,28 +671,21 @@ df.shape
 
 
 ```python
-df.groupby('y').size()
+df.groupby('subscribed').size()
 ```
 
 
 
 
-    y
-    no     39922
-    yes     5289
+    subscribed
+    0    39922
+    1     5289
     dtype: int64
 
 
 
 **Quick Observation** 
 - 5289 Out of 45211 contacted customers subscribed
-
-
-```python
-# Adding a new column by name 'subscribed' to store the value '1' if subscribed, else '0' 
-df['subscribed'] = (df.y == 'yes').astype('int')
-df.drop('y', axis=1, inplace=True)
-```
 
 
 ```python
@@ -1121,47 +1145,68 @@ for col in numerical_data :
     plt.ylabel(col)
     
     plt.show()
+
+# fig, axes = plt.subplots(nrows = len(numerical_data)//2, ncols = 2, figsize= (16, 12))
+#  plt.tight_layout()
+
+# for col in numerical_data : 
+    
+#     plt.subplot(1,2,1)
+#     sns.distplot(df[col])
+#     plt.xlabel(col)
+#     plt.ylabel('Density')
+    
+#     plt.subplot(1,2,2)
+#     sns.boxplot(x='subscribed', y = col, data =df, showmeans = True)
+#     plt.xlabel('Subscribed')
+#     plt.ylabel(col)
+    
+#     plt.show()
+    
+
+
+
 ```
 
 
     
-![png](output_33_0.png)
+![png](output_34_0.png)
     
 
 
 
     
-![png](output_33_1.png)
+![png](output_34_1.png)
     
 
 
 
     
-![png](output_33_2.png)
+![png](output_34_2.png)
     
 
 
 
     
-![png](output_33_3.png)
+![png](output_34_3.png)
     
 
 
 
     
-![png](output_33_4.png)
+![png](output_34_4.png)
     
 
 
 
     
-![png](output_33_5.png)
+![png](output_34_5.png)
     
 
 
 
     
-![png](output_33_6.png)
+![png](output_34_6.png)
     
 
 
@@ -1186,25 +1231,25 @@ for col in numerical_data :
 
 
     
-![png](output_35_0.png)
+![png](output_36_0.png)
     
 
 
 
     
-![png](output_35_1.png)
+![png](output_36_1.png)
     
 
 
 
     
-![png](output_35_2.png)
+![png](output_36_2.png)
     
 
 
 
     
-![png](output_35_3.png)
+![png](output_36_3.png)
     
 
 
@@ -1233,13 +1278,13 @@ plt.show()
 
 
     
-![png](output_37_0.png)
+![png](output_38_0.png)
     
 
 
 
     
-![png](output_37_1.png)
+![png](output_38_1.png)
     
 
 
@@ -1308,31 +1353,31 @@ for col in range(1, len(object_data) - 1, 2):
 
 
     
-![png](output_42_0.png)
+![png](output_43_0.png)
     
 
 
 
     
-![png](output_42_1.png)
+![png](output_43_1.png)
     
 
 
 
     
-![png](output_42_2.png)
+![png](output_43_2.png)
     
 
 
 
     
-![png](output_42_3.png)
+![png](output_43_3.png)
     
 
 
 
     
-![png](output_42_4.png)
+![png](output_43_4.png)
     
 
 
@@ -1360,7 +1405,7 @@ plt.ylabel('Count')
 
 plt.rcParams.update({'font.size': 16})
 
-plt.show()
+# plt.show()
 
 for col in range(1, len(object_data) - 1, 2): 
     plt.figure(figsize=(16,4))
@@ -1374,36 +1419,36 @@ for col in range(1, len(object_data) - 1, 2):
     plt.subplot(1, 2, 2).patch.set_visible(False)
     sns.countplot(x=df[column_name],hue='subscribed',data=df)
     
-    plt.show()
+#     plt.show()
 ```
 
 
     
-![png](output_44_0.png)
+![png](output_45_0.png)
     
 
 
 
     
-![png](output_44_1.png)
+![png](output_45_1.png)
     
 
 
 
     
-![png](output_44_2.png)
+![png](output_45_2.png)
     
 
 
 
     
-![png](output_44_3.png)
+![png](output_45_3.png)
     
 
 
 
     
-![png](output_44_4.png)
+![png](output_45_4.png)
     
 
 
@@ -1703,14 +1748,14 @@ df.corr()
 
 ```python
 plt.subplots(figsize=(10,5)) 
-sns.heatmap(df.corr(), cbar=True, cmap="RdBu_r")
+sns.heatmap(df.corr(), cbar=True, cmap="RdBu_r", linewidths=1)
 plt.title("Correlation Matrix", fontsize=18)
 plt.show()
 ```
 
 
     
-![png](output_50_0.png)
+![png](output_51_0.png)
     
 
 
@@ -2259,15 +2304,22 @@ encoded_df.columns
 ```python
 plt.subplots(figsize=(25,10)) 
 sns.heatmap(encoded_df[['job_encoded', 'marital_encoded', 'education_encoded',
-       'default_encoded', 'housing_encoded', 'loan_encoded', 'contact_encoded',
-       'month_encoded', 'poutcome_encoded', 'subscribed']].corr(), cbar=True, cmap="RdBu_r", annot=True)
+                        'default_encoded', 'housing_encoded', 'loan_encoded', 'contact_encoded',
+                        'month_encoded', 'poutcome_encoded', 'subscribed']].corr(), cbar=True, cmap="RdBu_r",linewidths=1, annot=True)
 plt.title("Correlation Matrix", fontsize=18)
-plt.show()
+# plt.show()
 ```
 
 
+
+
+    Text(0.5, 1.0, 'Correlation Matrix')
+
+
+
+
     
-![png](output_60_0.png)
+![png](output_61_1.png)
     
 
 
@@ -2401,25 +2453,17 @@ df.shape
 
 
 ```python
-df[(df['job']=='unknown') & (df['education']=='unknown')].count()
+print(f"Job Unknown: {df[df['job']=='unknown']['job'].count()}")
+print(f"Education Unknown: {df[df['education']== 0]['education'].count()}")
+print(f"Job and Education Unknown: {df[(df['job']=='unknown') & (df['education']== 0)]['education'].count()}")
+print(f"Job or Education Unknown:{df[(df['job']=='unknown') | (df['education']== 0)]['education'].count()}")
 ```
 
-
-
-
-    age           0
-    job           0
-    marital       0
-    education     0
-    balance       0
-    housing       0
-    loan          0
-    duration      0
-    campaign      0
-    subscribed    0
-    dtype: int64
-
-
+    Job Unknown: 288
+    Education Unknown: 1857
+    Job and Education Unknown: 127
+    Job or Education Unknown:2018
+    
 
 ### Dropping rows with unknown values
 - We are dropping the rows with 'unknown' as entry from the education and job column. Column 'education' has 1857, and 'job' has 288 unknown values.
@@ -2447,20 +2491,49 @@ df.shape
 
 
 ```python
-df.keys()
+# Checking calls with duration 0
+df[(df['duration']==0)]['duration'].count()
 ```
 
 
 
 
-    Index(['age', 'job', 'marital', 'education', 'balance', 'housing', 'loan',
-           'duration', 'campaign', 'subscribed'],
-          dtype='object')
+    3
 
 
 
 
 ```python
+# Checking if any customer with cal duration 0 has subscribed for the term deposit
+df[(df['duration']==0) & (df['subscribed']) == 1]['duration'].count()
+```
+
+
+
+
+    0
+
+
+
+- As expected, none of the cusomers with call duration 0 subscribed for the term deposit.  
+Hence we can drop these entries.
+
+
+```python
+df.drop(df[df['duration']==0].index, inplace=True)
+df.shape
+```
+
+
+
+
+    (43190, 10)
+
+
+
+
+```python
+# Updating Object data list
 object_data = [data for data in df.dtypes[df.dtypes == 'object'].index]
 object_data
 ```
@@ -2471,6 +2544,31 @@ object_data
     ['job', 'marital', 'housing', 'loan']
 
 
+
+
+```python
+def remove_outliers(data, column , minimum, maximum):
+    col_values = data[column].values
+    data[column] = np.where(np.logical_or(col_values<minimum, col_values>maximum), col_values.mean(), col_values)
+    return data
+```
+
+
+```python
+min_val = df["duration"].min()
+max_val = 1500
+df = remove_outliers(data=df, column='duration' , minimum=min_val, maximum=max_val)
+
+min_val = df["age"].min()
+max_val = 80
+df = remove_outliers(data=df, column='age' , minimum=min_val, maximum=max_val)
+
+min_val = df["campaign"].min()
+max_val = 6
+df = remove_outliers(data=df, column='campaign' , minimum=min_val, maximum=max_val)
+```
+
+### One-Hot Encoding
 
 
 ```python
@@ -2658,7 +2756,7 @@ obj_data_ohe.shape
 
 
 
-    (43193, 18)
+    (43190, 18)
 
 
 
@@ -2720,7 +2818,7 @@ df_ohe.shape
 
 
 
-    (43193, 24)
+    (43190, 24)
 
 
 
@@ -2747,30 +2845,30 @@ df_ohe.isnull().sum().sort_values(ascending = False)
 
 
 
-    age                  0
-    education            0
-    loan_yes             0
-    loan_no              0
-    housing_yes          0
-    housing_no           0
-    marital_single       0
-    marital_married      0
-    marital_divorced     0
-    job_unemployed       0
-    job_technician       0
-    job_student          0
-    job_services         0
-    job_self-employed    0
-    job_retired          0
-    job_management       0
-    job_housemaid        0
-    job_entrepreneur     0
-    job_blue-collar      0
-    job_admin.           0
-    campaign             0
-    duration             0
-    balance              0
     subscribed           0
+    loan_yes             0
+    education            0
+    balance              0
+    duration             0
+    campaign             0
+    job_admin.           0
+    job_blue-collar      0
+    job_entrepreneur     0
+    job_housemaid        0
+    job_management       0
+    job_retired          0
+    job_self-employed    0
+    job_services         0
+    job_student          0
+    job_technician       0
+    job_unemployed       0
+    marital_divorced     0
+    marital_married      0
+    marital_single       0
+    housing_no           0
+    housing_yes          0
+    loan_no              0
+    age                  0
     dtype: int64
 
 
@@ -2815,6 +2913,51 @@ for col in df_model:
 
 
 ```python
+sns.countplot(x=df_model['subscribed'], data=df_ohe)
+```
+
+
+
+
+    <AxesSubplot:xlabel='subscribed', ylabel='count'>
+
+
+
+
+    
+![png](output_93_1.png)
+    
+
+
+
+```python
+df_model_yes = df_model[df_model['subscribed']==1]
+for _ in range(6):
+    df_model = pd.concat([df_model,df_model_yes])
+df_model_yes = df_model[df_model['subscribed']==1].head(2500)
+df_model = pd.concat([df_model,df_model_yes])
+```
+
+
+```python
+sns.countplot(x=df_model['subscribed'], data=df_ohe)
+```
+
+
+
+
+    <AxesSubplot:xlabel='subscribed', ylabel='count'>
+
+
+
+
+    
+![png](output_95_1.png)
+    
+
+
+
+```python
 df_model[list(df_model.columns)[:12]].head()
 ```
 
@@ -2856,11 +2999,11 @@ df_model[list(df_model.columns)[:12]].head()
   <tbody>
     <tr>
       <th>0</th>
-      <td>58</td>
+      <td>58.0</td>
       <td>3</td>
       <td>2143</td>
-      <td>261</td>
-      <td>1</td>
+      <td>261.0</td>
+      <td>1.0</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -2871,11 +3014,11 @@ df_model[list(df_model.columns)[:12]].head()
     </tr>
     <tr>
       <th>1</th>
-      <td>44</td>
+      <td>44.0</td>
       <td>2</td>
       <td>29</td>
-      <td>151</td>
-      <td>1</td>
+      <td>151.0</td>
+      <td>1.0</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -2886,11 +3029,11 @@ df_model[list(df_model.columns)[:12]].head()
     </tr>
     <tr>
       <th>2</th>
-      <td>33</td>
+      <td>33.0</td>
       <td>2</td>
       <td>2</td>
-      <td>76</td>
-      <td>1</td>
+      <td>76.0</td>
+      <td>1.0</td>
       <td>0</td>
       <td>0</td>
       <td>1</td>
@@ -2901,11 +3044,11 @@ df_model[list(df_model.columns)[:12]].head()
     </tr>
     <tr>
       <th>5</th>
-      <td>35</td>
+      <td>35.0</td>
       <td>3</td>
       <td>231</td>
-      <td>139</td>
-      <td>1</td>
+      <td>139.0</td>
+      <td>1.0</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -2916,11 +3059,11 @@ df_model[list(df_model.columns)[:12]].head()
     </tr>
     <tr>
       <th>6</th>
-      <td>28</td>
+      <td>28.0</td>
       <td>3</td>
       <td>447</td>
-      <td>217</td>
-      <td>1</td>
+      <td>217.0</td>
+      <td>1.0</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
@@ -3056,6 +3199,207 @@ df_model[list(df_model.columns)[12:]].head()
 </div>
 
 
+
+### Testing Models
+
+
+```python
+def print_report(classifier, x_train, y_train, y_test, y_pred):
+    accuracies = cross_val_score(estimator = classifier, X = x_train, y = y_train, cv = 10, n_jobs = -1)
+    print(f'{classifier} Confusion  matrix:')
+    print(confusion_matrix(y_test, y_pred))
+    print(f'{classifier} accuracy mean {accuracies.mean()}')
+    print(f'{classifier} accuracy std dev {accuracies.std()}')
+    print(f'{classifier} preciosn score {precision_score(y_test, y_pred)}')
+    print(f'{classifier} recall score {recall_score(y_test, y_pred)}')
+    print(f'{classifier} f1 score {f1_score(y_test, y_pred)}')
+    print('*'*50)
+```
+
+
+```python
+from sklearn.metrics import precision_score, recall_score
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.metrics import f1_score
+from sklearn.datasets import make_classification
+from sklearn.model_selection import cross_val_score
+from sklearn.metrics import confusion_matrix
+```
+
+
+```python
+x = df_model.drop('subscribed',axis = 1).values
+y = df_model['subscribed'].values
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.25, random_state=42)
+scaler = StandardScaler()
+x_train = scaler.fit_transform(x_train)
+x_test = scaler.transform(x_test)
+```
+
+
+```python
+
+```
+
+
+```python
+lR = LogisticRegression()
+lR.fit(x_train, y_train)
+```
+
+
+
+
+    LogisticRegression()
+
+
+
+
+```python
+# Predicting the Test set results
+y_pred = lR.predict(x_test)
+```
+
+
+```python
+print_report(lR, x_train, y_train, y_test, y_pred)
+```
+
+    LogisticRegression() Confusion  matrix:
+    [[7647 1911]
+     [2323 7073]]
+    LogisticRegression() accuracy mean 0.7751396279881527
+    LogisticRegression() accuracy std dev 0.004652558949552185
+    LogisticRegression() preciosn score 0.7872885129118433
+    LogisticRegression() recall score 0.752767134951043
+    LogisticRegression() f1 score 0.7696409140369967
+    **************************************************
+    
+
+
+```python
+# KNN
+kNN = KNeighborsClassifier(n_neighbors = 5, metric = 'minkowski', p =2)
+kNN.fit(x_train, y_train)
+```
+
+
+
+
+    KNeighborsClassifier()
+
+
+
+
+```python
+y_pred = kNN.predict(x_test)
+```
+
+
+```python
+print_report(kNN, x_train, y_train, y_test, y_pred)
+```
+
+    KNeighborsClassifier() Confusion  matrix:
+    [[7368 2190]
+     [  91 9305]]
+    KNeighborsClassifier() accuracy mean 0.8702999528517225
+    KNeighborsClassifier() accuracy std dev 0.005564356162604067
+    KNeighborsClassifier() preciosn score 0.8094823836450631
+    KNeighborsClassifier() recall score 0.9903150276713495
+    KNeighborsClassifier() f1 score 0.890814226221818
+    **************************************************
+    
+
+
+```python
+# Fitting SVM to the trainig  set
+svm = SVC(kernel = 'linear', random_state=0)
+svm.fit(x_train, y_train)
+```
+
+
+
+
+    SVC(kernel='linear', random_state=0)
+
+
+
+
+```python
+y_pred = svm.predict(x_test)
+```
+
+
+```python
+print_report(svm, x_train, y_train, y_test, y_pred)
+```
+
+
+```python
+# Naive Bayes
+nb = GaussianNB()
+nb.fit(x_train, y_train)
+
+```
+
+
+```python
+y_pred = nb.predict(x_test)
+```
+
+
+```python
+print_report(nb, x_train, y_train, y_test, y_pred)
+```
+
+
+```python
+# Decision Tree
+dt = DecisionTreeClassifier(criterion = 'entropy')
+dt.fit(x_train, y_train)
+```
+
+
+```python
+y_pred = dt.predict(x_test)
+```
+
+
+```python
+print_report(dt, x_train, y_train, y_test, y_pred)
+```
+
+
+```python
+# Random Forest Classifier
+rfc = RandomForestClassifier(n_estimators = 10, criterion = 'entropy')
+rfc.fit(x_train, y_train)
+```
+
+
+```python
+y_pred = rfc.predict(x_test)
+```
+
+
+```python
+# Applying k_Fold Cross Validation
+print_report(rfc, x_train, y_train, y_test, y_pred)
+```
+
+
+```python
+
+```
+
+
+```python
+
+```
 
 
 ```python

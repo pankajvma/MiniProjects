@@ -1,0 +1,168 @@
+Report for LogisticRegression()
+LogisticRegression() Confusion  matrix:
+[[7899 1676]
+ [2091 6663]]
+
+LogisticRegression() accuracy mean: 0.7928056796066827
+LogisticRegression() accuracy std dev: 0.005942845127530835
+LogisticRegression() preciosn score: 0.7990166686653076
+LogisticRegression() recall score: 0.7611377655928718
+LogisticRegression() f1 score: 0.7796173872345404
+LogisticRegression() AUC: 0.7930493005510052
+
+Classification report: 
+              precision    recall  f1-score   support
+
+           0       0.79      0.82      0.81      9575
+           1       0.80      0.76      0.78      8754
+
+    accuracy                           0.79     18329
+   macro avg       0.79      0.79      0.79     18329
+weighted avg       0.79      0.79      0.79     18329
+
+Time taken: 0.7488701343536377
+**************************************************
+Report for KNeighborsClassifier()
+KNeighborsClassifier() Confusion  matrix:
+[[7662 1913]
+ [ 104 8650]]
+
+KNeighborsClassifier() accuracy mean: 0.8767893907890658
+KNeighborsClassifier() accuracy std dev: 0.005804346976860577
+KNeighborsClassifier() preciosn score: 0.8188961469279561
+KNeighborsClassifier() recall score: 0.9881197167009367
+KNeighborsClassifier() f1 score: 0.8955842004452038
+KNeighborsClassifier() AUC: 0.894164296992766
+
+Classification report: 
+              precision    recall  f1-score   support
+
+           0       0.99      0.80      0.88      9575
+           1       0.82      0.99      0.90      8754
+
+    accuracy                           0.89     18329
+   macro avg       0.90      0.89      0.89     18329
+weighted avg       0.91      0.89      0.89     18329
+
+Time taken: 45.59644937515259
+**************************************************
+Report for GaussianNB()
+GaussianNB() Confusion  matrix:
+[[7629 1946]
+ [3238 5516]]
+
+GaussianNB() accuracy mean: 0.7166787757501595
+GaussianNB() accuracy std dev: 0.005765957210496271
+GaussianNB() preciosn score: 0.7392120075046904
+GaussianNB() recall score: 0.630111948823395
+GaussianNB() f1 score: 0.6803157375431672
+GaussianNB() AUC: 0.713437175456084
+
+Classification report: 
+              precision    recall  f1-score   support
+
+           0       0.70      0.80      0.75      9575
+           1       0.74      0.63      0.68      8754
+
+    accuracy                           0.72     18329
+   macro avg       0.72      0.71      0.71     18329
+weighted avg       0.72      0.72      0.71     18329
+
+Time taken: 0.47113943099975586
+**************************************************
+Report for DecisionTreeClassifier(criterion='entropy')
+DecisionTreeClassifier(criterion='entropy') Confusion  matrix:
+[[8645  930]
+ [   0 8754]]
+
+DecisionTreeClassifier(criterion='entropy') accuracy mean: 0.9447324362225717
+DecisionTreeClassifier(criterion='entropy') accuracy std dev: 0.0019982351933538612
+DecisionTreeClassifier(criterion='entropy') preciosn score: 0.9039653035935564
+DecisionTreeClassifier(criterion='entropy') recall score: 1.0
+DecisionTreeClassifier(criterion='entropy') f1 score: 0.9495606898795965
+DecisionTreeClassifier(criterion='entropy') AUC: 0.9514360313315927
+
+Classification report: 
+              precision    recall  f1-score   support
+
+           0       1.00      0.90      0.95      9575
+           1       0.90      1.00      0.95      8754
+
+    accuracy                           0.95     18329
+   macro avg       0.95      0.95      0.95     18329
+weighted avg       0.95      0.95      0.95     18329
+
+Time taken: 3.0930755138397217
+**************************************************
+Report for RandomForestClassifier(criterion='entropy', n_estimators=10)
+RandomForestClassifier(criterion='entropy', n_estimators=10) Confusion  matrix:
+[[8940  635]
+ [   6 8748]]
+
+RandomForestClassifier(criterion='entropy', n_estimators=10) accuracy mean: 0.959717779303238
+RandomForestClassifier(criterion='entropy', n_estimators=10) accuracy std dev: 0.003012469118988247
+RandomForestClassifier(criterion='entropy', n_estimators=10) preciosn score: 0.9323244164979217
+RandomForestClassifier(criterion='entropy', n_estimators=10) recall score: 0.9993145990404386
+RandomForestClassifier(criterion='entropy', n_estimators=10) f1 score: 0.964657881678337
+RandomForestClassifier(criterion='entropy', n_estimators=10) AUC: 0.9664980305907154
+
+Classification report: 
+              precision    recall  f1-score   support
+
+           0       1.00      0.93      0.97      9575
+           1       0.93      1.00      0.96      8754
+
+    accuracy                           0.97     18329
+   macro avg       0.97      0.97      0.97     18329
+weighted avg       0.97      0.97      0.97     18329
+
+Time taken: 5.928005695343018
+**************************************************
+Report for GradientBoostingClassifier(learning_rate=1.0)
+GradientBoostingClassifier(learning_rate=1.0) Confusion  matrix:
+[[7947 1628]
+ [1214 7540]]
+
+GradientBoostingClassifier(learning_rate=1.0) accuracy mean: 0.8430721158270055
+GradientBoostingClassifier(learning_rate=1.0) accuracy std dev: 0.00434647048540564
+GradientBoostingClassifier(learning_rate=1.0) preciosn score: 0.8224258289703316
+GradientBoostingClassifier(learning_rate=1.0) recall score: 0.8613205391820882
+GradientBoostingClassifier(learning_rate=1.0) f1 score: 0.8414239482200646
+GradientBoostingClassifier(learning_rate=1.0) AUC: 0.8456472147607569
+
+Classification report: 
+              precision    recall  f1-score   support
+
+           0       0.87      0.83      0.85      9575
+           1       0.82      0.86      0.84      8754
+
+    accuracy                           0.84     18329
+   macro avg       0.84      0.85      0.84     18329
+weighted avg       0.85      0.84      0.85     18329
+
+Time taken: 94.998051404953
+**************************************************
+Report for AdaBoostClassifier()
+AdaBoostClassifier() Confusion  matrix:
+[[7995 1580]
+ [1769 6985]]
+
+AdaBoostClassifier() accuracy mean: 0.8144289073756656
+AdaBoostClassifier() accuracy std dev: 0.004795033118944951
+AdaBoostClassifier() preciosn score: 0.8155283129013426
+AdaBoostClassifier() recall score: 0.797920950422664
+AdaBoostClassifier() f1 score: 0.8066285582308448
+AdaBoostClassifier() AUC: 0.8164539477961885
+
+Classification report: 
+              precision    recall  f1-score   support
+
+           0       0.82      0.83      0.83      9575
+           1       0.82      0.80      0.81      8754
+
+    accuracy                           0.82     18329
+   macro avg       0.82      0.82      0.82     18329
+weighted avg       0.82      0.82      0.82     18329
+
+Time taken: 25.24671196937561
+**************************************************

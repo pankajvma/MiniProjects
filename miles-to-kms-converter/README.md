@@ -1,0 +1,1 @@
+Simple GUI Application developed to leaarn about basics of GUI programming with tkinter.

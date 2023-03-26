@@ -1,0 +1,132 @@
+1. Hangman
+Implemented using multiple modules, randomization, lists. This mini-project is the pyhton implementation of the classic guessing game "Hangman".
+
+2. blind-auction
+Implemented using dictionaries. Using System module to clear the screen during the program execution.
+
+3. caesar-cipher
+Implemented using lists. We are shifting the characters of a messaage by a certain number for encoding and decoding.
+
+4. calculator
+Implemeted using functiions, and dictionaries in python.
+
+5. password-generator
+Using lists, and randomization this mini-project is generating two passwords. Notice how there is total randomization in the second genrated password.
+
+6. rock-paper-scissors
+Used randomization, and lists for the implementation of this mini-project.
+
+7. blackJack
+Implemented using lists, Randomization. Here the mini-project is triyng to mimc a real life BlackJack game.
+
+8. guess-the-number
+Implemented using randomization and functions.
+This program asks the user to guess a number randomly selected by the computer.
+
+9. coffee-machine
+Implemeted using dictionaries, and functions. Using 'report' to generate the report of available items, and 'off' to turn the machine off.
+
+10. coffee-machine-with-oop
+Here is the oop based implementation of Coffee-machine. The classes 'coffee_maker', 'menu', 'money_machine' are being used to generate the objects to perform the similar tasks.
+
+11. quiz-game
+Used OOP and list for the implementation.
+
+12. turtle-squares
+Initializing and executing multiple turtle objects in a sequential way.
+- Used randomization, and lists.
+- Turtle objects are seen drawing squares.
+
+13. turtle_pentacontagon
+Mini project to show how increasing number of sides can affect the shape of an object.
+Used Randomization, lists, and turtle framework for the implementation.
+Execution of turtle_pentacontagon, the final figure (pentacontagon) is (almost) a circle.
+
+14. higher-lower
+A guuessing game where the user guesses the answer from two given options, if right answer is chosen by the user the game continues with other random candidate and the user will have to make the guess again.
+Impllemented using lists, randomization and multiple modules.
+
+15. turtle-spirograph
+Here are two of the spirographs genrated using the program. First spirograph is generated without any randomization.
+Because of randomization the output produced in the second execution is unique and the probability of it's repitition by the same program is negligible.
+- Implemented using lists, randomization, and OOP.
+
+16. hirst-painting
+In output of the mini-project there is something very much similar to one of the famous artworks of Damien Hirst.
+
+Colorgram module is used to extract various colors from an image "img.jpg" (placed inside the project directory itself). The extracted  colors are then stored in a list from which the artwork is being produced using randomization.
+
+17. turtle-race
+Mini-project trying to simulate a turtle race using multiple turtle objects. The Dialog box in the beginning of the execution asks the user to choose a colored Turtle from the Seven available turtles.
+
+The race of the result is then printed on the console at the end of the race.
+- Implemented using OOP, randomization, and Turtle framework.
+
+18. turtle_random_walk
+This is the output of one of the turtle's Randomwalks. Basic purpose of the mini-project is to see how often an object which is following random instructions, can retrace its own path when executing a given number of steps.
+
+Grid lines have been added for better visualization.
+- Implemented using lists, randomization, and OOP.
+
+19. turtle-pong
+The output create the classic Pong game.
+
+- Implemented using OOP - 
+	Everything in the program is an objects for example - Each of the paddles. The Ball is an Object. The scoreboard is an object. The Net placesd in the middle of the two players is an object.
+- List - Each segment, and the initial position of snake segments is stored in a list.
+- Skills improved- Knowledge of screen coordinates
+
+20. turtle-road-crossing
+Road crossing game with Turtle
+
+Generating infinite Car objects from CarManager  class.
+Using methods for continuous movement of cars.
+- Using events to move turtle.
+- Speeding up at each level up by upgrading speed.
+
+21. turtle-snake-game
+Here I have tried to create the classic Snake game.
+
+- Implemented using OOP - 
+	Everything in the program is an objects for example - The snake is an object made up of several segment objects. Each time the Snake touches the food we extend one more segment in the Snake. The food is an Object. The scoreboard is an object.
+- File handling - To keep track of the highscore
+- List - Each segment, and the initial position of snake segments is stored in a list.
+- Randomization - Used to transfer food to random positions on screen.
+
+22. indian-states-game
+Developed using pandas, and turtle in python.
+'indian-states-game' is a fun game that you can play to check your knowledge about the indian states.
+
+- Used pandas to store, retrieve the manipulate data related to states with the help of a CSV file.
+- Used turtle to plot the name of the states on the map.
+
+23. mail-merge
+The purpose of this mini projects is to get a better understanding of File handling in python.
+The program will generate mails for specified recipients by using a specified format.
+Here the input and output files are stored at different directories.
+
+Implemented using:
+- File handling
+- String manipulation 
+
+24. squirrel-census-data-analysis
+Implemented by utilizing the pandas library to perform the basic data of reading the data of squirrel census and saving the output of the analysis to an output csv.
+
+25. car_price_prediction
+Predicting car prices with the help of Python's pandas and numpy libraries.
+
+26. Bank-Marketing-Prediction
+ML project. Moved to repository https://github.com/pankajvma/Bank-Marketing-Prediction
+
+27. pandas-nato-alphabet
+The purpose of this mini-project is to better understand the working and use of list and dictionary comprehension python.
+
+The program generates NATO words corresponding to each letter of a given name.
+
+Implented using:
+- Dictionary comprehension
+- Pandas
+
+28. miles-to-kms-converter
+Simple GUI Application developed to leaarn about basics of GUI programming with tkinter.
+The outcome can be seen below.
